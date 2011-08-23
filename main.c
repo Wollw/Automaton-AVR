@@ -1,11 +1,20 @@
+/*      Copyright David Shere <david.e.shere@gmail.com> 2011
+ *  A cellular automaton simulator written for the AVR micro controllers.
+ *  Developed for the ATMega328p in particular but should work on others
+ *  with no or little modification.
+ */
 #include <avr/io.h>
 #include <stdlib.h>
 #include <string.h>
-//Define functions
-//======================
+#include <util/delay.h>
+
+// 8MHz 
+#define F_CPU 8000000
+
+// ioinit and delay_ms taken from a SparkFun example by Nathan Seidle
+// Define functions
 void ioinit(void);			//Initializes IO
 void delay_ms(uint16_t x); //General purpose delay
-//======================
 
 // Each instance of a cell holds current state, an id, and the neihbours
 struct cell {
@@ -183,15 +192,11 @@ void ioinit (void)
 		DDRD = 0b11111110; //PORTD (RX on PD0)
 }
 
-//General short delays
-void delay_ms(uint16_t x)
-{
-	uint8_t y, z;
-	for ( ; x > 0 ; x--){
-		for ( y = 0 ; y < 90 ; y++){
-			for ( z = 0 ; z < 6 ; z++){
-				asm volatile ("nop");
-			}
-		}
-	}
+// Delay execution for a number of milliseconds
+void delay_ms(unsigned int ms) {
+    int i;
+    for (i = 0; i < (double)ms/100.0; i++) {
+        _delay_ms(10);
+    }
 }
+    
