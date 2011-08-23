@@ -6,7 +6,6 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include <string.h>
-#include <util/delay.h>
 
 // 8MHz 
 #define F_CPU 8000000
@@ -192,11 +191,16 @@ void ioinit (void)
 		DDRD = 0b11111110; //PORTD (RX on PD0)
 }
 
-// Delay execution for a number of milliseconds
-void delay_ms(unsigned int ms) {
-    int i;
-    for (i = 0; i < (double)ms/100.0; i++) {
-        _delay_ms(10);
+//General short delays
+void delay_ms(uint16_t x)
+{
+    uint8_t y, z;
+    for ( ; x > 0 ; x--){
+        for ( y = 0 ; y < 90 ; y++){
+            for ( z = 0 ; z < 6 ; z++){
+                asm volatile ("nop");
+            }
+        }
     }
 }
-    
+
