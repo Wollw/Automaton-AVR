@@ -1,0 +1,4 @@
+* Allow programming over serial and saving config to EEPROM
+    - Or at least implement a way to config the cells at compile
+      time with an include file or with some of my existing JSON...
+* convert to using shift registers (74HC595) to allow for many cells
