@@ -6,9 +6,8 @@
 *.map
 *.sym
 *.lss
-*.o  
-*.lst  
+*.o
+*.lst
 *.s
 *.d
 .dep
-
