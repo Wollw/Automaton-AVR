@@ -7,8 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 8MHz 
-#define F_CPU 8000000
+#define MHZ 8
 #define OFF 0
 #define ON  1
 
@@ -125,14 +124,17 @@ void ioinit (void)
     DDRD = 0b11111110; //PORTD (RX on PD0)
 }
 
-//General short delays
+//General short delays - modified by David Shere to add MHZ loop
 void delay_ms(uint16_t x)
 {
     uint8_t y, z;
+    int w;
     for ( ; x > 0 ; x--){
-        for ( y = 0 ; y < 90 ; y++){
-            for ( z = 0 ; z < 6 ; z++){
-                asm volatile ("nop");
+        for ( w = 0; w < MHZ; w++) {
+            for ( y = 0 ; y < 90 ; y++){
+                for ( z = 0 ; z < 6 ; z++){
+                    asm volatile ("nop");
+                }
             }
         }
     }
