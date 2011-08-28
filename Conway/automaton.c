@@ -112,6 +112,7 @@ int main (void)
         cells[i].neighbors = NULL;
     }
     free(cells);
+    cells = NULL;
      
     return(0);
 }
