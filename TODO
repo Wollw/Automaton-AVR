@@ -3,3 +3,4 @@
       time with an include file or with some of my existing JSON...
 * convert to using shift registers (74HC595) to allow for many cells
 * Stop using ms_delay and use clock interrupts instead
+* DIP switches for initial state / rules
