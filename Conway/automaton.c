@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MHZ 8
+#define MHZ 1
 #define OFF 0
 #define ON  1
 #define CELL_COUNT 9

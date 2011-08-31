@@ -8,15 +8,20 @@
 #include <string.h>
 #include "functions.h"
 
-#define MHZ 8
+#define MHZ 1
 #define OFF 0
 #define ON  1
 #define CELL_COUNT 21
 
+#define RULES_SURVIVAL  0b1011001110UL
+#define RULES_BIRTH     0b10110UL
+#define INITIAL_STATE   0b000000000000000000100UL
+
+/*
 #define RULES_SURVIVAL  0b110001UL
 #define RULES_BIRTH     0b1100001UL
 #define INITIAL_STATE   0b001000000000000000000UL
-
+*/
 
 int main (void)
 {
