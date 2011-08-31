@@ -7,21 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
+#include "config.h"
 
 #define MHZ 1
 #define OFF 0
 #define ON  1
 #define CELL_COUNT 21
-
-#define RULES_SURVIVAL  0b1011001110UL
-#define RULES_BIRTH     0b10110UL
-#define INITIAL_STATE   0b000000000000000000100UL
-
-/*
-#define RULES_SURVIVAL  0b110001UL
-#define RULES_BIRTH     0b1100001UL
-#define INITIAL_STATE   0b001000000000000000000UL
-*/
 
 int main (void)
 {
@@ -29,20 +20,27 @@ int main (void)
     ioinit();
 
     // Blink all LEDs to make sure they all work
-    //blinkLEDs(1000);
-    //delay_ms(1000);
-
+/*    int i = 100;
+    for (; i > 0; i--) {
+        blinkLEDs(i);
+    }
+    delay_ms(1000);
+*/
     struct ruleStruct rules = { RULES_SURVIVAL, RULES_BIRTH };
     struct cellStruct *cells = createCells(INITIAL_STATE);
 
+    
+    uint16_t delay = DELAY_MS;
     while(1) {
-        // Display the board state with LEDs
+        #if STAGGER_SPEED
+            delay = getCellCount(cells,ON) * 50;
+        #endif
+
         displayBoard(cells);
 
         applyRules(cells,&rules);
 
-        // 1 second interval
-        delay_ms(1000);
+        delay_ms(delay);
     }
 
     // Free the allocated memory even though we should never get here
@@ -234,15 +232,25 @@ void applyRules(struct cellStruct *myCells, struct ruleStruct *myRules) {
                 myCells[i].stateNext = OFF;
         }
         else { // Error
-            blinkLEDs(100);
-            blinkLEDs(100);
-            blinkLEDs(100);
-            blinkLEDs(100);
-            blinkLEDs(100);
+            while (1) {
+                blinkLEDs(100);
+            }
         }
     }
-    // Update state
+    // Update state and calculate number of living cells
     for (i = 0; i < CELL_COUNT; i++) {
         myCells[i].state = myCells[i].stateNext;
     }
 }
+
+// get the number of living/dead cells
+uint8_t getCellCount(struct cellStruct *myCells, uint8_t state) {
+    uint8_t i;
+    uint8_t c;
+    for (i = 0; i < CELL_COUNT; i++) {
+        if (myCells[i].state == state)
+            c++;
+    }
+    return c;
+}
+    
