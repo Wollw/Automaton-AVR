@@ -15,7 +15,7 @@
 
 #define RULES_SURVIVAL  0b110001UL
 #define RULES_BIRTH     0b1100001UL
-
+#define INITIAL_STATE   0b001000000000000000000UL
 
 
 int main (void)
@@ -28,9 +28,7 @@ int main (void)
     //delay_ms(1000);
 
     struct ruleStruct rules = { RULES_SURVIVAL, RULES_BIRTH };
-    struct cellStruct *cells = createCells();
-
-    cells[19].state = ON;
+    struct cellStruct *cells = createCells(INITIAL_STATE);
 
     while(1) {
         // Display the board state with LEDs
@@ -76,7 +74,7 @@ void delay_ms(uint16_t x)
 *   Setup the cells to be used in the automaton
 *   neighbors bit numbers are equal to the cells' indices
 */
-struct cellStruct *createCells(void) {
+struct cellStruct *createCells(uint32_t initialState) {
     struct cellStruct *myCells;
     myCells = (struct cellStruct *)malloc(CELL_COUNT*sizeof(struct cellStruct));
 
@@ -169,7 +167,10 @@ struct cellStruct *createCells(void) {
 
     uint8_t i;
     for (i = 0; i < CELL_COUNT; i++)
-        myCells[i].state = OFF;
+        if ( (initialState >> i) & 1)
+            myCells[i].state = ON;
+        else
+            myCells[i].state = OFF;
 
     return myCells;
 }
