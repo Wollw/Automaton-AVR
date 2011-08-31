@@ -6,31 +6,17 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include <string.h>
+#include "functions.h"
 
 #define MHZ 8
 #define OFF 0
 #define ON  1
 #define CELL_COUNT 21
 
-// ioinit and delay_ms taken from a SparkFun example by Nathan Seidle
-// Define functions
-void ioinit(void);            //Initializes IO
-void delay_ms(uint16_t x); //General purpose delay
-struct cell *createCells(void); // create CELL_COUNT cells
-void setCellState(struct cell *myCell,  // Change the cell state to 'state'
-                  uint8_t state);       // 0 = off, anything else = on
-void displayBoard(struct cell *myCells); // Display the state of the board with LEDs on IO
-void blinkLEDs(uint16_t ms);    // Blink LEDs for a total of 'ms' milliseconds;
-void updateCellStates(struct cell *myCells); // Apply the rules of the game to the cells
+#define RULES_SURVIVAL  0b110001UL
+#define RULES_BIRTH     0b1100001UL
 
-// Each instance of a cell holds current state, an id, and the neihbours
-struct cell {
-    unsigned state :1;
-    unsigned stateNext :1;
-    uint8_t *port;
-    uint8_t pin;
-    uint32_t neighbors; // neighbors stored as bits to save ram
-};
+
 
 int main (void)
 {
@@ -41,7 +27,8 @@ int main (void)
     //blinkLEDs(1000);
     //delay_ms(1000);
 
-    struct cell *cells = createCells();
+    struct ruleStruct rules = { RULES_SURVIVAL, RULES_BIRTH };
+    struct cellStruct *cells = createCells();
 
     cells[19].state = ON;
 
@@ -49,7 +36,7 @@ int main (void)
         // Display the board state with LEDs
         displayBoard(cells);
 
-        updateCellStates(cells);
+        applyRules(cells,&rules);
 
         // 1 second interval
         delay_ms(1000);
@@ -89,9 +76,9 @@ void delay_ms(uint16_t x)
 *   Setup the cells to be used in the automaton
 *   neighbors bit numbers are equal to the cells' indices
 */
-struct cell* createCells(void) {
-    struct cell *myCells;
-    myCells = (struct cell *)malloc(CELL_COUNT*sizeof(struct cell));
+struct cellStruct *createCells(void) {
+    struct cellStruct *myCells;
+    myCells = (struct cellStruct *)malloc(CELL_COUNT*sizeof(struct cellStruct));
 
     myCells[0].port = (uint8_t*)&PORTB;
     myCells[0].pin = PB0;
@@ -188,7 +175,7 @@ struct cell* createCells(void) {
 }
 
 // Takes an array of cells "myCells" turns LEDs on and off to simulate life/death
-void displayBoard(struct cell *myCells) {
+void displayBoard(struct cellStruct *myCells) {
     uint8_t i;
     for (i = 0; i < CELL_COUNT; i++) {
         switch (myCells[i].state) {
@@ -215,7 +202,7 @@ void blinkLEDs(uint16_t ms) {
 }
 
 // Apply the rules of the game to the cells
-void updateCellStates(struct cell *myCells) {
+void applyRules(struct cellStruct *myCells, struct ruleStruct *myRules) {
     uint8_t i;
     for (i = 0; i < CELL_COUNT; i++) {
         uint8_t n = 0;
@@ -228,29 +215,17 @@ void updateCellStates(struct cell *myCells) {
 
         // Survival Rules
         if (myCells[i].state == ON) {
-            switch (n) {
-                case 0:
-                case 4:
-                case 5:
-                    myCells[i].stateNext = ON;
-                    break;
-                default:
-                    myCells[i].stateNext = OFF;
-                    break;
-            }
+            if ( (myRules->survival >> n) & 1 )
+                myCells[i].stateNext = ON;
+            else
+                myCells[i].stateNext = OFF;
         }
         // Birth Rules
         else if (myCells[i].state == OFF) {
-            switch (n) {
-                case 0:
-                case 5:
-                case 6:
-                    myCells[i].stateNext = ON;
-                    break;
-                default:
-                    myCells[i].stateNext = OFF;
-                    break;
-            }
+            if ( (myRules->birth >> n) & 1 )
+                myCells[i].stateNext = ON;
+            else
+                myCells[i].stateNext = OFF;
         }
         else { // Error
             blinkLEDs(100);
