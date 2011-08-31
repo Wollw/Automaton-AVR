@@ -10,107 +10,54 @@
 #define MHZ 8
 #define OFF 0
 #define ON  1
+#define CELL_COUNT 9
 
 // ioinit and delay_ms taken from a SparkFun example by Nathan Seidle
 // Define functions
 void ioinit(void);            //Initializes IO
 void delay_ms(uint16_t x); //General purpose delay
-struct cell *createCells(uint16_t cellCount); // create cellCount cells
+struct cell *createCells(void); // create CELL_COUNT cells
 void setCellState(struct cell *myCell,  // Change the cell state to 'state'
                   uint8_t state);       // 0 = off, anything else = on
+void displayBoard(struct cell *myCells); // Display the state of the board with LEDs on IO
+void blinkLEDs(uint16_t ms);    // Blink LEDs for a total of 'ms' milliseconds;
+void updateCellStates(struct cell *myCells); // Apply the rules of the game to the cells
 
 // Each instance of a cell holds current state, an id, and the neihbours
 struct cell {
-    uint16_t neighborCount;
-    unsigned state :1;
-    unsigned stateNext :1;
-    uint16_t pin;
-    uint16_t *neighbors;
+    uint8_t state;
+    uint8_t stateNext;
+    uint8_t *port;
+    uint8_t pin;
+    uint32_t neighbors; // neighbors stored as bits to save ram
 };
 
 int main (void)
 {
-    ioinit(); //Setup IO pins and defaults
+    // Turn IO pins on
+    ioinit();
 
-    uint16_t cellCount = 9;
-    struct cell *cells = createCells(cellCount);
+    // Blink all LEDs to make sure they all work
+    blinkLEDs(500);
+    delay_ms(500);
 
-    int i;
-    for (i = 0; i < cellCount; i++)
-        setCellState(&cells[i],OFF);
-    setCellState(&cells[3],ON);
-    setCellState(&cells[4],ON);
-    setCellState(&cells[5],ON);
+    struct cell *cells = createCells();
 
-    // Display initial state
-    for (i = 0; i < 9; i++) {
-        switch (cells[i].state) {
-            case 0:
-                if (i < 5)
-                    PORTB &= ~_BV(cells[i].pin);
-                else
-                    PORTC &= ~_BV(cells[i].pin);
-                break;
-            case 1:
-                if (i < 5)
-                    PORTB |= _BV(cells[i].pin);
-                else
-                    PORTC |= _BV(cells[i].pin);
-                break;
-        }
-    }
-    delay_ms(1000);
+    cells[3].state = ON;
+    cells[4].state = ON;
+    cells[5].state = ON;
 
     while(1) {
-        // Calculate next cell states
-        for (i = 0; i < cellCount; i++) {
-            int j;
-            int n = 0;
-            for (j = 0; j < cells[i].neighborCount; j++) {
-                n += cells[cells[i].neighbors[j]].state;
-            }
+        // Display the board state with LEDs
+        displayBoard(cells);
 
-            if (cells[i].state == 1 && (n == 2 || n == 3)) {
-                cells[i].stateNext = 1;
-            }
-            else if (cells[i].state == 0 && n == 3) {
-                cells[i].stateNext = 1;
-            }
-            else {
-                cells[i].stateNext = 0;
-            }
-        }
+        updateCellStates(cells);
 
-        // Update state
-        for (i = 0; i < cellCount; i++) {
-            cells[i].state = cells[i].stateNext;
-        }
-
-        // Display new state
-        for (i = 0; i < cellCount; i++) {
-            switch (cells[i].state) {
-                case 0:
-                    if (i < 5)
-                        PORTB &= ~_BV(cells[i].pin);
-                    else
-                        PORTC &= ~_BV(cells[i].pin);
-                    break;
-                case 1:
-                    if (i < 5)
-                        PORTB |= _BV(cells[i].pin);
-                    else
-                        PORTC |= _BV(cells[i].pin);
-                    break;
-            }
-        }
+        // 1 second interval
         delay_ms(1000);
     }
 
     // Free the allocated memory even though we should never get here
-    for (i = 0; i < cellCount; i++) {
-        free(cells[i].neighbors);
-        cells[i].neighbors = NULL;
-    }
     free(cells);
     cells = NULL;
      
@@ -120,16 +67,15 @@ int main (void)
 void ioinit (void)
 {
     //1 = output, 0 = input
-    DDRB = 0b11111111; //All outputs
-    DDRC = 0b11111111; //All outputs
-    DDRD = 0b11111110; //PORTD (RX on PD0)
+    DDRB = 0b11111111;
+    DDRC = 0b00111111;
+    DDRD = 0b01111111;
 }
 
 //General short delays - modified by David Shere to add MHZ loop
 void delay_ms(uint16_t x)
 {
-    uint8_t y, z;
-    int w;
+    uint8_t w, y, z;
     for ( ; x > 0 ; x--){
         for ( w = 0; w < MHZ; w++) {
             for ( y = 0 ; y < 90 ; y++){
@@ -143,91 +89,127 @@ void delay_ms(uint16_t x)
 
 /*
 *   Setup the cells to be used in the automaton
-*   cellCount : number of cells to reserve space in sram for 
+*   neighbors bit numbers are equal to the cells' indices
 */
-struct cell* createCells(uint16_t cellCount) {
+struct cell* createCells(void) {
     struct cell *myCells;
-    myCells = (struct cell *)malloc(cellCount*sizeof(struct cell));
+    myCells = (struct cell *)malloc(CELL_COUNT*sizeof(struct cell));
 
+    myCells[0].port = (uint8_t*)&PORTB;
     myCells[0].pin = PB1;
-    myCells[0].neighbors = (uint16_t *)malloc(3*sizeof(uint16_t));
-    myCells[0].neighbors[0] = 3;
-    myCells[0].neighbors[1] = 4;
-    myCells[0].neighbors[2] = 1;
-    myCells[0].neighborCount = 3;
+    myCells[0].neighbors = 0b11010;
 
+    myCells[1].port = (uint8_t*)&PORTB;
     myCells[1].pin = PB2;
-    myCells[1].neighbors = (uint16_t *)malloc(5*sizeof(uint16_t));
-    myCells[1].neighbors[0] = 3;
-    myCells[1].neighbors[1] = 4;
-    myCells[1].neighbors[2] = 5;
-    myCells[1].neighbors[3] = 0;
-    myCells[1].neighbors[4] = 2;
-    myCells[1].neighborCount = 5;
+    myCells[1].neighbors = 0b111101;
 
+    myCells[2].port = (uint8_t*)&PORTB;
     myCells[2].pin = PB3;
-    myCells[2].neighbors = (uint16_t *)malloc(3*sizeof(uint16_t));
-    myCells[2].neighbors[0] = 4;
-    myCells[2].neighbors[1] = 5;
-    myCells[2].neighbors[2] = 1;
-    myCells[2].neighborCount = 3;
+    myCells[2].neighbors = 0b110010;
 
+    myCells[3].port = (uint8_t*)&PORTB;
     myCells[3].pin = PB4;
-    myCells[3].neighbors = (uint16_t *)malloc(5*sizeof(uint16_t));
-    myCells[3].neighbors[0] = 4;
-    myCells[3].neighbors[1] = 0;
-    myCells[3].neighbors[2] = 1;
-    myCells[3].neighbors[3] = 6;
-    myCells[3].neighbors[4] = 7;
-    myCells[3].neighborCount = 5;
+    myCells[3].neighbors = 0b11010011;
 
+    myCells[4].port = (uint8_t*)&PORTB;
     myCells[4].pin = PB5;
-    myCells[4].neighbors = (uint16_t *)malloc(8*sizeof(uint16_t));
-    myCells[4].neighbors[0] = 3;
-    myCells[4].neighbors[1] = 5;
-    myCells[4].neighbors[2] = 0;
-    myCells[4].neighbors[3] = 1;
-    myCells[4].neighbors[4] = 2;
-    myCells[4].neighbors[5] = 6;
-    myCells[4].neighbors[6] = 7;
-    myCells[4].neighbors[7] = 8;
-    myCells[4].neighborCount = 8;
+    myCells[4].neighbors = 0b111101111;
 
+    myCells[5].port = (uint8_t*)&PORTC;
     myCells[5].pin = PC0;
-    myCells[5].neighbors = (uint16_t *)malloc(5*sizeof(uint16_t));
-    myCells[5].neighbors[0] = 4;
-    myCells[5].neighbors[1] = 1;
-    myCells[5].neighbors[2] = 2;
-    myCells[5].neighbors[3] = 7;
-    myCells[5].neighbors[4] = 8;
-    myCells[5].neighborCount = 5;
+    myCells[5].neighbors = 0b110010110;
 
+    myCells[6].port = (uint8_t*)&PORTC;
     myCells[6].pin = PC1;
-    myCells[6].neighbors = (uint16_t *)malloc(3*sizeof(uint16_t));
-    myCells[6].neighbors[0] = 3;
-    myCells[6].neighbors[1] = 4;
-    myCells[6].neighbors[2] = 7;
-    myCells[6].neighborCount = 3;
+    myCells[6].neighbors = 0b10011000;
 
+    myCells[7].port = (uint8_t*)&PORTC;
     myCells[7].pin = PC2;
-    myCells[7].neighbors = (uint16_t *)malloc(5*sizeof(uint16_t));
-    myCells[7].neighbors[0] = 3;
-    myCells[7].neighbors[1] = 4;
-    myCells[7].neighbors[2] = 5;
-    myCells[7].neighbors[3] = 6;
-    myCells[7].neighbors[4] = 8;
-    myCells[7].neighborCount = 5;
+    myCells[7].neighbors = 0b101111000;
 
+    myCells[8].port = (uint8_t*)&PORTC;
     myCells[8].pin = PC3;
-    myCells[8].neighbors = (uint16_t *)malloc(3*sizeof(uint16_t));
-    myCells[8].neighbors[0] = 4;
-    myCells[8].neighbors[1] = 5;
-    myCells[8].neighbors[2] = 7;
-    myCells[8].neighborCount = 3;
+    myCells[8].neighbors = 0b10110000;
+
+    uint8_t i;
+    for (i = 0; i < CELL_COUNT; i++)
+        myCells[i].state = OFF;
 
     return myCells;
 }
 
-void setCellState(struct cell *myCell, uint8_t state) {
-    myCell->state = state;
+// Takes an array of cells "myCells" turns LEDs on and off to simulate life/death
+void displayBoard(struct cell *myCells) {
+    uint8_t i;
+    for (i = 0; i < CELL_COUNT; i++) {
+        switch (myCells[i].state) {
+            case ON:
+                *(myCells[i].port) |= _BV(myCells[i].pin);
+                break;
+            case OFF:
+                *(myCells[i].port) &= ~_BV(myCells[i].pin);
+                break;
+        }
+    }
+}
+
+// Blink LEDs on and off for a total of 'ms' milliseconds
+void blinkLEDs(uint16_t ms) {
+    PORTB = 0xFF;
+    PORTC = 0x3F;
+    PORTD = 0x7F;
+    delay_ms(ms/2);
+    PORTB = 0x00;
+    PORTC = 0x00;
+    PORTD = 0x00;
+    delay_ms(ms/2);
+}
+
+// Apply the rules of the game to the cells
+void updateCellStates(struct cell *myCells) {
+    uint8_t i;
+    for (i = 0; i < CELL_COUNT; i++) {
+        uint8_t n = 0;
+        uint8_t j;
+        for (j = 0; j < CELL_COUNT; j++) {
+            if ( (myCells[i].neighbors >> j) & 1)
+                if (myCells[j].state == ON)
+                    n++;
+        }
+
+        // Survival Rules
+        if (myCells[i].state == ON) {
+            switch (n) {
+                case 2:
+                case 3:
+                    myCells[i].stateNext = ON;
+                    break;
+                default:
+                    myCells[i].stateNext = OFF;
+                    break;
+            }
+        }
+        // Birth Rules
+        else if (myCells[i].state == OFF) {
+            switch (n) {
+                case 3:
+                    myCells[i].stateNext = ON;
+                    break;
+                default:
+                    myCells[i].stateNext = OFF;
+                    break;
+            }
+        }
+        else {
+            blinkLEDs(100);
+            blinkLEDs(100);
+            blinkLEDs(100);
+            blinkLEDs(100);
+            blinkLEDs(100);
+        }
+    }
+    // Update state
+    for (i = 0; i < CELL_COUNT; i++) {
+        myCells[i].state = myCells[i].stateNext;
+    }
 }

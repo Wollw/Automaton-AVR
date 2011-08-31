@@ -16,7 +16,7 @@
 // Define functions
 void ioinit(void);            //Initializes IO
 void delay_ms(uint16_t x); //General purpose delay
-struct cell *createCells(uint8_t cellCount); // create cellCount cells
+struct cell *createCells(void); // create CELL_COUNT cells
 void setCellState(struct cell *myCell,  // Change the cell state to 'state'
                   uint8_t state);       // 0 = off, anything else = on
 void displayBoard(struct cell *myCells); // Display the state of the board with LEDs on IO
@@ -25,26 +25,25 @@ void updateCellStates(struct cell *myCells); // Apply the rules of the game to t
 
 // Each instance of a cell holds current state, an id, and the neihbours
 struct cell {
-    unsigned neighborCount :5;
     unsigned state :1;
     unsigned stateNext :1;
+    uint8_t *port;
     uint8_t pin;
     uint32_t neighbors; // neighbors stored as bits to save ram
 };
 
 int main (void)
 {
-    ioinit(); //Setup IO pins and defaults
+    // Turn IO pins on
+    ioinit();
 
-    blinkLEDs(1000);
-    delay_ms(1000);
+    // Blink all LEDs to make sure they all work
+    //blinkLEDs(1000);
+    //delay_ms(1000);
 
-    struct cell *cells = createCells(CELL_COUNT);
+    struct cell *cells = createCells();
 
-    // Start these cells off living
     cells[19].state = ON;
-
-    // Display initial state of board with LEDs
 
     while(1) {
         // Display the board state with LEDs
@@ -66,9 +65,9 @@ int main (void)
 void ioinit (void)
 {
     //1 = output, 0 = input
-    DDRB = 0b11111111; //All outputs
-    DDRC = 0b11111111; //All outputs
-    DDRD = 0b11111111; //All outputs
+    DDRB = 0b11111111;
+    DDRC = 0b00111111;
+    DDRD = 0b01111111;
 }
 
 //General short delays - modified by David Shere to add MHZ loop
@@ -88,96 +87,97 @@ void delay_ms(uint16_t x)
 
 /*
 *   Setup the cells to be used in the automaton
-*   cellCount : number of cells to reserve space in sram for 
+*   neighbors bit numbers are equal to the cells' indices
 */
-struct cell* createCells(uint8_t cellCount) {
+struct cell* createCells(void) {
     struct cell *myCells;
-    myCells = (struct cell *)malloc(cellCount*sizeof(struct cell));
+    myCells = (struct cell *)malloc(CELL_COUNT*sizeof(struct cell));
 
+    myCells[0].port = (uint8_t*)&PORTB;
     myCells[0].pin = PB0;
-    myCells[0].neighborCount = 10;
     myCells[0].neighbors = 0b11111111110;
 
+    myCells[1].port = (uint8_t*)&PORTB;
     myCells[1].pin = PB1;
-    myCells[1].neighborCount = 8;
     myCells[1].neighbors = 0b100001100011100101;
 
+    myCells[2].port = (uint8_t*)&PORTB;
     myCells[2].pin = PB2;
-    myCells[2].neighborCount = 8;
     myCells[2].neighbors = 0b1000011000110001011;
 
+    myCells[3].port = (uint8_t*)&PORTB;
     myCells[3].pin = PB3;
-    myCells[3].neighborCount = 8;
     myCells[3].neighbors = 0b10000110001100010101;
 
+    myCells[4].port = (uint8_t*)&PORTB;
     myCells[4].pin = PB4;
-    myCells[4].neighborCount = 8;
     myCells[4].neighbors = 0b100001100011000101001;
 
+    myCells[5].port = (uint8_t*)&PORTB;
     myCells[5].pin = PB5;
-    myCells[5].neighborCount = 8;
     myCells[5].neighbors = 0b11000110001010011;
 
+    myCells[6].port = (uint8_t*)&PORTB;
     myCells[6].pin = PB6;
-    myCells[6].neighborCount = 10;
     myCells[6].neighbors = 0b111001110010100011;
 
-    myCells[7].pin = PB7;
-    myCells[7].neighborCount = 10;
+    myCells[7].port = (uint8_t*)&PORTC;
+    myCells[7].pin = PC2;
     myCells[7].neighbors = 0b1100011100101000111;
 
-    myCells[8].pin = PC0;
-    myCells[8].neighborCount = 10;
+    myCells[8].port = (uint8_t*)&PORTC;
+    myCells[8].pin = PC1;
     myCells[8].neighbors = 0b11000111001010001101;
 
-    myCells[9].pin = PC1;
-    myCells[9].neighborCount = 10;
+    myCells[9].port = (uint8_t*)&PORTC;
+    myCells[9].pin = PC0;
     myCells[9].neighbors = 0b110001110010100011001;
 
-    myCells[10].pin = PC2;
-    myCells[10].neighborCount = 10;
+    myCells[10].port = (uint8_t*)&PORTB;
+    myCells[10].pin = PB7;
     myCells[10].neighbors = 0b100011100101001110001;
 
+    myCells[11].port = (uint8_t*)&PORTC;
     myCells[11].pin = PC3;
-    myCells[11].neighborCount = 9;
     myCells[11].neighbors = 0b111001010011100010;
 
-    myCells[12].pin = PC4;
-    myCells[12].neighborCount = 9;
+    myCells[12].port = (uint8_t*)&PORTD;
+    myCells[12].pin = PD1;
     myCells[12].neighbors = 0b1100010100111000110;
 
-    myCells[13].pin = PC5;
-    myCells[13].neighborCount = 9;
+    myCells[13].port = (uint8_t*)&PORTD;
+    myCells[13].pin = PD0;
     myCells[13].neighbors = 0b11000101001110001100;
 
     // Skipping PC6 as it is the reset pin
+    // There is no PC7 on the ATMega328P
 
-    myCells[14].pin = PD0;
-    myCells[14].neighborCount = 9;
+    myCells[14].port = (uint8_t*)&PORTC;
+    myCells[14].pin = PC5;
     myCells[14].neighbors = 0b110001010011100011000;
 
-    myCells[15].pin = PD1;
-    myCells[15].neighborCount = 9;
+    myCells[15].port = (uint8_t*)&PORTC;
+    myCells[15].pin = PC4;
     myCells[15].neighbors = 0b100010100111001110000;
 
-    myCells[16].pin = PD2;
-    myCells[16].neighborCount = 7;
+    myCells[16].port = (uint8_t*)&PORTD;
+    myCells[16].pin = PD3;
     myCells[16].neighbors = 0b100101000110001100000;
 
-    myCells[17].pin = PD3;
-    myCells[17].neighborCount = 7;
+    myCells[17].port = (uint8_t*)&PORTD;
+    myCells[17].pin = PD2;
     myCells[17].neighbors = 0b1010001100011000010;
 
-    myCells[18].pin = PD4;
-    myCells[18].neighborCount = 7;
+    myCells[18].port = (uint8_t*)&PORTD;
+    myCells[18].pin = PD6;
     myCells[18].neighbors = 0b10100011000110000100;
 
+    myCells[19].port = (uint8_t*)&PORTD;
     myCells[19].pin = PD5;
-    myCells[19].neighborCount = 7;
     myCells[19].neighbors = 0b101000110001100001000;
 
-    myCells[20].pin = PD6;
-    myCells[20].neighborCount = 7;
+    myCells[20].port = (uint8_t*)&PORTD;
+    myCells[20].pin = PD4;
     myCells[20].neighbors = 0b10011100011000010000;
 
     uint8_t i;
@@ -192,21 +192,11 @@ void displayBoard(struct cell *myCells) {
     uint8_t i;
     for (i = 0; i < CELL_COUNT; i++) {
         switch (myCells[i].state) {
-            case 0:
-                if (i < 8)
-                    PORTB &= ~_BV(myCells[i].pin);
-                else if (i <  14)
-                    PORTC &= ~_BV(myCells[i].pin);
-                else 
-                    PORTD &= ~_BV(myCells[i].pin);
+            case ON:
+                *(myCells[i].port) |= _BV(myCells[i].pin);
                 break;
-            case 1:
-                if (i < 8)
-                    PORTB |= _BV(myCells[i].pin);
-                else if (i <  14)
-                    PORTC |= _BV(myCells[i].pin);
-                else
-                    PORTD |= _BV(myCells[i].pin);
+            case OFF:
+                *(myCells[i].port) &= ~_BV(myCells[i].pin);
                 break;
         }
     }
@@ -214,19 +204,13 @@ void displayBoard(struct cell *myCells) {
 
 // Blink LEDs on and off for a total of 'ms' milliseconds
 void blinkLEDs(uint16_t ms) {
-    PORTB = _BV(PB0) | _BV(PB1) | _BV(PB2) | _BV(PB3) |
-             _BV(PB4) | _BV(PB5) | _BV(PB6) | _BV(PB7);
-    PORTC = _BV(PC0) | _BV(PC1) | _BV(PC2) | _BV(PC3) |
-             _BV(PC4) | _BV(PC5);
-    PORTD = _BV(PD0) | _BV(PD1) | _BV(PD2) | _BV(PD3) |
-             _BV(PD4) | _BV(PD5) | _BV(PD6);
+    PORTB = 0xFF;
+    PORTC = 0x3F;
+    PORTD = 0x7F;
     delay_ms(ms/2);
-    PORTB = ~(_BV(PB0) | _BV(PB1) | _BV(PB2) | _BV(PB3) |
-               _BV(PB4) | _BV(PB5) | _BV(PB6) | _BV(PB7));
-    PORTC = ~(_BV(PC0) | _BV(PC1) | _BV(PC2) | _BV(PC3) |
-               _BV(PC4) | _BV(PC5));
-    PORTD = ~(_BV(PD0) | _BV(PD1) | _BV(PD2) | _BV(PD3) |
-               _BV(PD4) | _BV(PD5) | _BV(PD6));
+    PORTB = 0x00;
+    PORTC = 0x00;
+    PORTD = 0x00;
     delay_ms(ms/2);
 }
 
@@ -234,11 +218,12 @@ void blinkLEDs(uint16_t ms) {
 void updateCellStates(struct cell *myCells) {
     uint8_t i;
     for (i = 0; i < CELL_COUNT; i++) {
+        uint8_t n = 0;
         uint8_t j;
-        int n = 0;
         for (j = 0; j < CELL_COUNT; j++) {
-            if ( (1 << j) & myCells[i].neighbors )
-                n += myCells[j].state;
+            if ( (myCells[i].neighbors >> j) & 1)
+                if (myCells[j].state == ON)
+                    n++;
         }
 
         // Survival Rules
@@ -248,6 +233,9 @@ void updateCellStates(struct cell *myCells) {
                 case 4:
                 case 5:
                     myCells[i].stateNext = ON;
+                    break;
+                default:
+                    myCells[i].stateNext = OFF;
                     break;
             }
         }
@@ -259,10 +247,17 @@ void updateCellStates(struct cell *myCells) {
                 case 6:
                     myCells[i].stateNext = ON;
                     break;
+                default:
+                    myCells[i].stateNext = OFF;
+                    break;
             }
         }
-        else {
-            myCells[i].stateNext = OFF;
+        else { // Error
+            blinkLEDs(100);
+            blinkLEDs(100);
+            blinkLEDs(100);
+            blinkLEDs(100);
+            blinkLEDs(100);
         }
     }
     // Update state
