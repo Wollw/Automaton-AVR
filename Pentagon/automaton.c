@@ -6,7 +6,7 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include <string.h>
-#include "functions.h"
+#include "automaton.h"
 #include "config.h"
 
 #define MHZ 1
@@ -28,6 +28,9 @@ int main (void)
 */
     struct ruleStruct rules = { RULES_SURVIVAL, RULES_BIRTH };
     struct cellStruct *cells = createCells(INITIAL_STATE);
+    if (cells == NULL)
+        while (1)
+            blinkLEDs(100);
 
     
     uint16_t delay = DELAY_MS;
@@ -44,7 +47,8 @@ int main (void)
     }
 
     // Free the allocated memory even though we should never get here
-    free(cells);
+    if (cells != NULL)
+        free(cells);
     cells = NULL;
      
     return(0);
@@ -80,6 +84,8 @@ void delay_ms(uint16_t x)
 struct cellStruct *createCells(uint32_t initialState) {
     struct cellStruct *myCells;
     myCells = (struct cellStruct *)malloc(CELL_COUNT*sizeof(struct cellStruct));
+    if (myCells == NULL)
+        return NULL;
 
     myCells[0].port = (uint8_t*)&PORTB;
     myCells[0].pin = PB0;
@@ -246,7 +252,7 @@ void applyRules(struct cellStruct *myCells, struct ruleStruct *myRules) {
 // get the number of living/dead cells
 uint8_t getCellCount(struct cellStruct *myCells, uint8_t state) {
     uint8_t i;
-    uint8_t c;
+    uint8_t c = 0;
     for (i = 0; i < CELL_COUNT; i++) {
         if (myCells[i].state == state)
             c++;
