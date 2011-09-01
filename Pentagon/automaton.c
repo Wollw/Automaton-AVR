@@ -33,7 +33,7 @@ int main (void)
     uint16_t delay = DELAY_MS;
     while(1) {
         #if STAGGER_SPEED
-            delay = getCellCount(cells,ON) * 50;
+            delay = getCellCount(cells,ON) * STAGGER_DELAY_MS;
         #endif
 
         displayBoard(cells);
