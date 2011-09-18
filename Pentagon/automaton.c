@@ -56,10 +56,15 @@ int main (void)
 
 void ioinit (void)
 {
-    //1 = output, 0 = input
-    DDRB = 0b11111111;
-    DDRC = 0b00111111;
-    DDRD = 0b01111111;
+    // Data Direction Registers
+    // 0 = input; 1 = output
+    DDRB  = 0b11111111;
+    DDRC  = 0b00111111;
+    DDRD  = 0b01111111;
+
+    PORTB = 0b00000000;
+    PORTC = 0b11000000;
+    PORTD = 0b10000000;
 }
 
 //General short delays - modified by David Shere to add MHZ loop
@@ -259,4 +264,3 @@ uint8_t getCellCount(struct cellStruct *myCells, uint8_t state) {
     }
     return c;
 }
-    

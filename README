@@ -1,0 +1,5 @@
+Developed with an ATMega328P with fuse settings:
+
+lfuse:  0x62
+hfuse:  0xd9
+efuse:  0x07

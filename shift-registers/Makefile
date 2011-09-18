@@ -42,6 +42,11 @@
 # MCU name
 MCU = atmega328p
 
+# Fuse settings
+
+LFUSE = 0xe2
+HFUSE = 0xd9
+EFUSE = 0x07
 
 # Processor frequency.
 #     This will define a symbol, F_CPU, in all source code files equal to the 
@@ -50,13 +55,18 @@ MCU = atmega328p
 #     automatically to create a 32-bit value in your source code.
 F_CPU = 8000000
 
+# Serial communication settings
+PICOCOM = picocom
+BAUDRATE = 9600
+SERIALPORT = /dev/tty.usbserial-A4006DGP
+
 
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
 
 
 # Target file name (without extension).
-TARGET = automaton
+TARGET = main
 
 
 # List C source files here. (C dependencies are automatically generated.)
@@ -342,8 +352,7 @@ end:
 
 # Display size of file.
 HEXSIZE = $(SIZE) --target=$(FORMAT) $(TARGET).hex
-#ELFSIZE = $(SIZE) -A $(TARGET).elf
-ELFSIZE = $(SIZE) -C --mcu=$(MCU) $(TARGET).elf
+ELFSIZE = $(SIZE) -C $(TARGET).elf
 AVRMEM = avr-mem.sh $(TARGET).elf $(MCU)
 
 sizebefore:
@@ -361,6 +370,12 @@ gccversion :
 	@$(CC) --version
 
 
+# Program the fuses
+fuse:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m
+
+serial:
+	$(PICOCOM) -b $(BAUDRATE) $(SERIALPORT)
 
 # Program the device.  
 program: $(TARGET).hex $(TARGET).eep
