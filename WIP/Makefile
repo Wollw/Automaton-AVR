@@ -70,7 +70,7 @@ TARGET = main
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c rules.c leds.c
+SRC = $(TARGET).c rules.c leds.c automaton.c initial_state.c
 
 
 # List Assembler source files here.
@@ -352,7 +352,7 @@ end:
 
 # Display size of file.
 HEXSIZE = $(SIZE) --target=$(FORMAT) $(TARGET).hex
-ELFSIZE = $(SIZE) -C $(TARGET).elf
+ELFSIZE = $(SIZE) -B $(TARGET).elf
 AVRMEM = avr-mem.sh $(TARGET).elf $(MCU)
 
 sizebefore:
