@@ -28,4 +28,5 @@ typedef struct petridish_struct petridish_t;
     Update the state of the cells in the automaton based on the current generation
 */
 void automaton_init(petridish_t *petridish);
+void automaton_destroy(petridish_t *petridish);
 void automaton_update(petridish_t *petridish);

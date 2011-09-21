@@ -29,14 +29,17 @@ int main(void){
     automaton_init(&petridish);
     
     leds_update(&petridish);
+/*
     while (1) {
 
-        leds_update(&petridish);
-        _delay_ms(1000);
+        petridish_update(&petridish);
         leds_update(&petridish);
         _delay_ms(1000);
 
     }
+*/
+    automaton_destroy(&petridish);
+
     return 0;
 }
 
