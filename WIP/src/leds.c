@@ -18,7 +18,7 @@
 */
 void leds_shift_init(void) {
     // Make the shift register pins outputs
-    DDRB |= _BV(RCLK) | _BV(SRCLK) | _BV(SER);
+    LEDS_DDR |= _BV(LEDS_RCLK) | _BV(LEDS_SRCLK) | _BV(LEDS_SER);
 }
 
 /*
@@ -41,18 +41,18 @@ void leds_update(petridish_t *petridish) {
 // shift a number out.  pins_to_shift is how many bits to shift
 // buffering with zero instead of the new_state bit values
 void leds_shift_out(uint32_t new_state, uint8_t pins_to_shift) {
-    PORTB &= ~_BV(RCLK);
+    LEDS_PORT &= ~_BV(LEDS_RCLK);
 
-    for (uint8_t i = 0; i < SHIFT_OUT_PIN_COUNT; i++) {
-        PORTB &= ~_BV(SRCLK);
+    for (uint8_t i = 0; i < LEDS_SHIFT_REG_COUNT * 8; i++) {
+        LEDS_PORT &= ~_BV(LEDS_SRCLK);
         if (pins_to_shift && new_state & ((uint32_t)1 << i)) {
-            PORTB |= _BV(SER);
+            LEDS_PORT |= _BV(LEDS_SER);
             pins_to_shift--;
         }
-        PORTB |= _BV(SRCLK);
-        PORTB &= ~_BV(SER);
+        LEDS_PORT |= _BV(LEDS_SRCLK);
+        LEDS_PORT &= ~_BV(LEDS_SER);
     }
 
-    PORTB |= _BV(RCLK);
+    LEDS_PORT |= _BV(LEDS_RCLK);
 }
 

@@ -15,6 +15,7 @@
 #include "automaton.h"
 #include "rules.h"
 #include "leds.h"
+#include "config.h"
 
 int main(void){
     // Turn the serial port on
@@ -37,12 +38,12 @@ int main(void){
 
     // Start running the simulation
     leds_update(&petridish);
-    _delay_ms(1000);
+    _delay_ms(MY_DELAY_MS);
     while (1) {
 
         automaton_update(&petridish);
         leds_update(&petridish);
-        _delay_ms(500);
+        _delay_ms(MY_DELAY_MS);
 
     }
 

@@ -2,21 +2,22 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
+#define MY_DELAY_MS 500
 
 #define MY_CELL_COUNT 9
 #define MY_INITIAL_STATE 0b010010010
-const uint32_t MY_NEIGHBORS[MY_CELL_COUNT] = 
-{
-    0b000011010,
-    0b000111101,
-    0b000110010,
-    0b011010011,
-    0b111101111,
-    0b110010110,
-    0b010011000,
-    0b101111000,
-    0b010110000
-};
+#define MY_NEIGHBORS \
+    {                \
+        0b000011010, \
+        0b000111101, \
+        0b000110010, \
+        0b011010011, \
+        0b111101111, \
+        0b110010110, \
+        0b010011000, \
+        0b101111000, \
+        0b010110000 \
+    }
 
 /*
 #define MY_CELL_COUNT   24

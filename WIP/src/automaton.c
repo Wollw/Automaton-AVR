@@ -14,9 +14,10 @@
 #include "serial.h"
 #include "config.h"
 
+const uint32_t neighbors[MY_CELL_COUNT] = MY_NEIGHBORS;
+
 /* Create the cells and set initial conditions */
 void automaton_init(petridish_t *petridish) {
-
     petridish->size = MY_CELL_COUNT;
     petridish->cells = (cell_t *)malloc(petridish->size * sizeof(cell_t));
     if (petridish->cells == NULL)
@@ -28,7 +29,7 @@ void automaton_init(petridish_t *petridish) {
     for (uint8_t i = 0; i < petridish->size; i++) {
         petridish->cells[i].state =
             (initial_state & ((uint32_t)1 << i)) ? ON : OFF ;
-        petridish->cells[i].neighbors = MY_NEIGHBORS[i];
+        petridish->cells[i].neighbors = neighbors[i];
     }
 }
 

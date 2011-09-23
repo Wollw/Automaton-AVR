@@ -1,14 +1,15 @@
 #pragma once
 #include "automaton.h"
 
-// Number of pins avaiable through serial->parallel
-// shift registers (74HC595)
-#define SHIFT_OUT_PIN_COUNT 24
+// shift registers (74HC595) for LEDs
+#define LEDS_SHIFT_REG_COUNT    3
 
-// Serial->Parallel for LEDs
-#define RCLK    PB0
-#define SER     PB1
-#define SRCLK   PB2
+// Serial->Parallel for LEDs - Might change to PORTC to leave SPI open
+#define LEDS_DDR    DDRB
+#define LEDS_PORT   PORTB
+#define LEDS_RCLK   PB0
+#define LEDS_SER    PB1
+#define LEDS_SRCLK  PB2
 
 // Functions for interacting with the output for leds
 // See leds.c for details
