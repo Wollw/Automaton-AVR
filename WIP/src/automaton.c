@@ -51,7 +51,6 @@ void automaton_update(petridish_t *petridish) {
                 if (petridish->cells[j].state == ON)
                     n++;
         }
-        serial_write('0'+n);
 
         // Survival Rules
         if (petridish->cells[i].state == ON) {
@@ -71,9 +70,9 @@ void automaton_update(petridish_t *petridish) {
     // Update state and calculate number of living cells
     for (uint8_t i = 0; i < petridish->size; i++) {
         petridish->cells[i].state = petridish->cells[i].state_next;
+        // Write the automaton state to serial out MSB first
+        serial_write(petridish->cells[i].state+'0');
     }
-    serial_write('\n');
     serial_write('\r');
     serial_write('\n');
-    serial_write('\r');
 }
