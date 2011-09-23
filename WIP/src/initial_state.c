@@ -11,8 +11,7 @@ uint32_t initial_state_read() {
     _delay_us(20);
     INITIAL_STATE_PORT &= ~_BV(INITIAL_STATE_PS);
 
-    int i;
-    for (i = 0; i < INITIAL_STATE_SHIFT_REG_COUNT * 8; i++) {
+    for (uint8_t i = 0; i < INITIAL_STATE_SHIFT_REG_COUNT * 8; i++) {
         _delay_us(2);
 
         if ( INITIAL_STATE_PINS & _BV(INITIAL_STATE_DO) )
@@ -21,9 +20,6 @@ uint32_t initial_state_read() {
         INITIAL_STATE_PORT &= ~_BV(INITIAL_STATE_CP);
         INITIAL_STATE_PORT |= _BV(INITIAL_STATE_CP);
     }
-
-    // temporary, REMOVE when switches are connected to MCU
-    initial_state = 0b101010101010101010101010;
 
     return initial_state;
 } 

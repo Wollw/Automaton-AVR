@@ -1,18 +1,3 @@
-# Hey Emacs, this is a -*- makefile -*-
-#----------------------------------------------------------------------------
-# WinAVR Makefile Template written by Eric B. Weddington, Jörg Wunsch, et al.
-#
-# Released to the Public Domain
-#
-# Additional material for this makefile was written by:
-# Peter Fleury
-# Tim Henigan
-# Colin O'Flynn
-# Reiner Patommel
-# Markus Pfaff
-# Sander Pool
-# Frederik Rouleau
-#
 #----------------------------------------------------------------------------
 # On command line:
 #
@@ -37,7 +22,6 @@
 #
 # To rebuild project do "make clean" then "make all".
 #----------------------------------------------------------------------------
-
 
 # MCU name
 MCU = atmega328p
@@ -70,7 +54,8 @@ TARGET = main
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c rules.c leds.c automaton.c initial_state.c
+SRC = $(TARGET).c rules.c leds.c automaton.c \
+      initial_state.c serial.c
 
 
 # List Assembler source files here.

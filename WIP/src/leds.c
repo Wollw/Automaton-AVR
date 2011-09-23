@@ -17,7 +17,7 @@
     register needed to control LEDs
 */
 void leds_shift_init(void) {
-    // 
+    // Make the shift register pins outputs
     DDRB |= _BV(RCLK) | _BV(SRCLK) | _BV(SER);
 }
 
@@ -27,13 +27,14 @@ void leds_shift_init(void) {
 */
 void leds_update(petridish_t *petridish) {
     uint32_t state = 0;
-    int i;
-    for (i = 0; i < petridish->size; i++) {
+
+    for (uint8_t i = 0; i < petridish->size; i++) {
         if ( petridish->cells[i].state == ON )
             state |= (uint32_t)1 << i;
         else
             state &= ~((uint32_t)1 << i);
     }
+
     leds_shift_out(state, petridish->size);
 }
 
@@ -51,7 +52,7 @@ void leds_shift_out(uint32_t new_state, uint8_t pins_to_shift) {
         PORTB |= _BV(SRCLK);
         PORTB &= ~_BV(SER);
     }
-    PORTB |= _BV(RCLK);
 
+    PORTB |= _BV(RCLK);
 }
 

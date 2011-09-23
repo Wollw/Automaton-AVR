@@ -11,7 +11,8 @@
 // Each instance of a cell holds current state, an id, and the neighbors
 struct cell_struct {
     unsigned state :1;
-    uint16_t neighbors; // neighbors stored as bits: bit 0 == cell 0, bit 5 = cell 5, etc...
+    unsigned state_next :1;
+    uint32_t neighbors; // neighbors bitfield
 };
 typedef struct cell_struct cell_t;
 

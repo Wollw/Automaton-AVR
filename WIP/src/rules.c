@@ -20,6 +20,8 @@
 #include <util/delay.h>
 #include "rules.h"
 
+#define NULL 0
+
 /*
     Initialize the pins used for the 4021 shift register
     for use for reading the rules switches
@@ -66,14 +68,17 @@ uint16_t rules_read_dip(uint8_t rules_type) {
         cp = RULES_BIRTH_CP;
         ps = RULES_BIRTH_PS;
         dout = RULES_BIRTH_DO;
+    } else {
+        cp = NULL;
+        ps = NULL;
+        dout = NULL;
     }
 
     PORTD |= _BV(ps);
     _delay_us(20);
     PORTD &= ~_BV(ps);
 
-    int i;
-    for (i = 0; i < RULES_SHIFT_REG_COUNT * 8; i++) {
+    for (uint8_t i = 0; i < RULES_SHIFT_REG_COUNT * 8; i++) {
         _delay_us(2);
 
         if ( PIND & _BV(dout) )
