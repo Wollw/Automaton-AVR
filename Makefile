@@ -54,8 +54,7 @@ TARGET = main
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c rules.c leds.c automaton.c \
-      initial_state.c serial.c
+SRC = $(wildcard src/*.c) $(wildcard src/*.s)
 
 
 # List Assembler source files here.

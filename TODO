@@ -1,6 +1,4 @@
-* Allow programming over serial and saving config to EEPROM
-    - Or at least implement a way to config the cells at compile
-      time with an include file or with some of my existing JSON...
-* convert to using shift registers (74HC595) to allow for many cells
 * Stop using _ms_delay and use clock interrupts instead
-* DIP switches for initial state / rules
+* DIP switches for initial state 
+    -- Added but not in use yet as they aren't setup on the hardware
+* Switch to PORTC for LEDs to leave hardware SPI open to use.
