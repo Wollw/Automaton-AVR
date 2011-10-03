@@ -37,13 +37,11 @@ int main(void){
     automaton_init(&petridish);
 
     // Start running the simulation
-    leds_update(&petridish);
-    _delay_ms(MY_DELAY_MS);
-    while (1) {
+	for (;;) {
 
-        automaton_update(&petridish);
         leds_update(&petridish);
         _delay_ms(MY_DELAY_MS);
+        automaton_update(&petridish);
 
     }
 
