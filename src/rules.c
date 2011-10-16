@@ -29,15 +29,15 @@
 void rules_shift_init(void) {
     // Survival Rules
     // Latch and Clock set to output
-    DDRD |= _BV(RULES_SURV_PS) | _BV(RULES_SURV_CP);
+    RULES_DDR |= _BV(RULES_SURV_PS) | _BV(RULES_SURV_CP);
     // Data In as input
-    DDRD &= ~_BV(RULES_SURV_DO);
+    RULES_DDR &= ~_BV(RULES_SURV_DO);
 
     // Birth Rules
     // Latch and Clock set to output
-    DDRD |= _BV(RULES_BIRTH_PS) | _BV(RULES_BIRTH_CP);
+    RULES_DDR |= _BV(RULES_BIRTH_PS) | _BV(RULES_BIRTH_CP);
     // Data In as input
-    DDRD &= ~_BV(RULES_BIRTH_DO);
+    RULES_DDR &= ~_BV(RULES_BIRTH_DO);
 }
 
 /*
@@ -74,18 +74,18 @@ uint16_t rules_read_dip(uint8_t rules_type) {
         dout = NULL;
     }
 
-    PORTD |= _BV(ps);
+    RULES_PORT |= _BV(ps);
     _delay_us(20);
-    PORTD &= ~_BV(ps);
+    RULES_PORT &= ~_BV(ps);
 
     for (uint8_t i = 0; i < RULES_SHIFT_REG_COUNT * 8; i++) {
         _delay_us(2);
 
-        if ( PIND & _BV(dout) )
+        if ( RULES_PIN & _BV(dout) )
             rules |= (uint16_t)1 << i;
         _delay_us(20);
-        PORTD &= ~_BV(cp);
-        PORTD |= _BV(cp);
+        RULES_PORT &= ~_BV(cp);
+        RULES_PORT |= _BV(cp);
     }
     return rules;
 } 

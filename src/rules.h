@@ -1,5 +1,9 @@
 #pragma once
 
+#define	RULES_DDR	DDRD
+#define	RULES_PORT	PORTD
+#define	RULES_PIN	PIND
+
 // Parallel->Serial for Survival Rules DIP switches
 #define RULES_SURV_CP    PD2 // Clock
 #define RULES_SURV_PS    PD3 // Latch

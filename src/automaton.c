@@ -11,7 +11,7 @@
 #include "automaton.h"
 #include "rules.h"
 #include "initial_state.h"
-#include "serial.h"
+//#include "serial.h"
 #include "config.h"
 
 const uint32_t neighbors[MY_CELL_COUNT] = MY_NEIGHBORS;
@@ -24,8 +24,8 @@ void automaton_init(petridish_t *petridish) {
         return;
 
     // Set the cells' initial states
-    //uint32_t initial_state = initial_state_read();
-    uint32_t initial_state = MY_INITIAL_STATE;
+    uint32_t initial_state = initial_state_read();
+    //uint32_t initial_state = MY_INITIAL_STATE;
     for (uint8_t i = 0; i < petridish->size; i++) {
         petridish->cells[i].state =
             (initial_state & ((uint32_t)1 << i)) ? ON : OFF ;
@@ -71,9 +71,5 @@ void automaton_update(petridish_t *petridish) {
     // Update state and calculate number of living cells
     for (uint8_t i = 0; i < petridish->size; i++) {
         petridish->cells[i].state = petridish->cells[i].state_next;
-        // Write the automaton state to serial out MSB first
-        serial_write(petridish->cells[i].state+'0');
     }
-    serial_write('\r');
-    serial_write('\n');
 }
