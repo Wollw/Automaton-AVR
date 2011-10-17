@@ -2,13 +2,13 @@
 #include "automaton.h"
 
 // shift registers (74HC595) for LEDs
-#define LEDS_SHIFT_REG_COUNT    3
+#define LEDS_SHIFT_REG_COUNT	3
 
 // Serial->Parallel for LEDs - Might change to PORTC to leave SPI open
-#define LEDS_DDR    DDRB
+#define LEDS_DDR	DDRB
 #define LEDS_PORT   PORTB
 #define LEDS_RCLK   PB0
-#define LEDS_SER    PB1
+#define LEDS_SER	PB1
 #define LEDS_SRCLK  PB2
 
 // Functions for interacting with the output for leds
