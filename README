@@ -4,5 +4,5 @@ Pick a configuration:
 To build:
     $ make
 
-To upload (from src directory):
+To upload:
     $ make program
