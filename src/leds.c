@@ -1,12 +1,19 @@
-/*
-*   Functions used for handling the output LEDs of the automaton
-*   
-*   leds_shift_init
-*	   setup the pins needed to control the LEDs
-*
-*   leds_update
-*	   update the LEDs based on the bits of the number new_states
-*
+/*	Automaton AVR - leds.c
+ *
+ *	(c) 2011 - David Ellis Shere
+ *
+ *	Functions used for handling the output LEDs of the automaton
+ *   
+ *   'leds_shift_init' just sets up the pins needed to use the shift out
+ *	registers that control the LEDs.
+ *
+ *	'leds_update' gets the state of each cell and packs it into a uint32_t.
+ *	it then calls 'leds_shift_out' to do the actual output to the shift
+ *	registers.
+ *
+ *	'leds_shift_out' just handles the shifting of the actual states to the
+ *	shift out registers.
+ *
 */
 #include <avr/io.h>
 #include <util/delay.h>

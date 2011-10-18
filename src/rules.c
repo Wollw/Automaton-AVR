@@ -1,20 +1,21 @@
-/*
-*   Functions used for handling the rules of the automaton
-*   
-*   rules_shift_init
-*	   setup the pins needed for reading the rules
-*	   from the dip switches through the 4021 shift
-*	   registers
-*
-*   rules_read
-*	   read the rules dip switches through the 4021 parallel->serial
-*	   shift registers.
-*   
-*   rules_save_eeprom
-*	   save the current rules to eeprom.  checks bit 13 (last switch on
-*	   the rule dip switches, furthest right) for rules set and then
-*	   checks to see if eeprom needs to be updated.  Only actually writes
-*	   if rules differ from eeprom.
+/*	Automaton AVR - rules.c
+ *
+ *	(c) 2011 - David Ellis Shere
+ *  Functions used for handling the rules of the automaton
+ *   
+ *  rules_shift_init
+ *		setup the pins needed for reading the rules
+ *		from the dip switches through the 4021 shift
+ *		registers
+ *
+ *	rules_read
+ *		takes a rule set as to read the rules of and calls rules_read_dip
+ *		to do the actual reading.
+ *
+ *	rules_read_dip
+ *		read the rules dip switches through the 4021 parallel->serial
+ *		shift registers.
+ *   
 */
 #include <avr/io.h>
 #include <util/delay.h>

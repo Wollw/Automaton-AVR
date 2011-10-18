@@ -1,3 +1,18 @@
+/*	Automaton AVR - initial_state.c
+ *
+ *	(c) 2011 - David Ellis Shere
+ *
+ *	Functions for providing the initial state of the petridish.
+ *	
+ *	'initial_state_shift_init' sets up the pins needed to read the shift
+ *	registers that the switches used to control the initial state are
+ *	attached to.
+ *
+ *	'initial_state_read' simply reads the switches into a uint32_t variable
+ *	where each bit is a cell state. The cell number is the bit number so
+ *	bits can be accessed by shifting by the cell's id. (shift 4 times to get
+ *	cell 4, shift 0 times to get cell 0, etc)
+*/
 #include <avr/io.h>
 #include <util/delay.h>
 #include "initial_state.h"

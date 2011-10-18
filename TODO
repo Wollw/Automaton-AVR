@@ -1,5 +1,3 @@
 * Add Audio syncing with ADC to change states with music
 * Stop using _ms_delay and use clock interrupts instead
-* DIP switches for initial state 
-    -- Added but not in use yet as they aren't setup on the hardware
 * Switch to PORTC for LEDs to leave hardware SPI open to use.
