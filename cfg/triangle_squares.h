@@ -1,11 +1,9 @@
+// Triangle and Square Tessellation
 #pragma once
-#include <stdlib.h>
-#include <avr/io.h>
 
-#define MY_DELAY_MS 500
+#define CONFIG_DELAY_MS 500
 
-#define MY_CELL_COUNT   24
-#define MY_NEIGHBORS \
+#define CONFIG_NEIGHBORS \
 { \
     0b000000101101000000111100, \
     0b000000101101000000110001, \

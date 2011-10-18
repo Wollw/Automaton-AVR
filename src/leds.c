@@ -24,29 +24,30 @@
 	register needed to control LEDs
 */
 void leds_shift_init(void) {
-	// Make the shift register pins outputs
 	LEDS_DDR |= _BV(LEDS_RCLK) | _BV(LEDS_SRCLK) | _BV(LEDS_SER);
 }
 
 /*
-	Converts the cell states from the petridish
+	Converts the cell states from the automaton
 	into individual bits to shift out with leds_shift_out
 */
-void leds_update(petridish_t *petridish) {
+void leds_update(automaton_t *automaton) {
 	uint32_t state = 0;
 
-	for (uint8_t i = 0; i < petridish->size; i++) {
-		if ( petridish->cells[i].state == ON )
+	for (uint8_t i = 0; i < automaton->size; i++) {
+		if ( automaton->cells[i].state == ON )
 			state |= (uint32_t)1 << i;
 		else
 			state &= ~((uint32_t)1 << i);
 	}
 
-	leds_shift_out(state, petridish->size);
+	leds_shift_out(state, automaton->size);
 }
 
-// shift a number out.  pins_to_shift is how many bits to shift
-// buffering with zero instead of the new_state bit values
+/*
+	shift a pin state out.  pins_to_shift is how many bits to shift
+	buffering with zero instead of the new_state bit values
+*/
 void leds_shift_out(uint32_t new_state, uint8_t pins_to_shift) {
 	LEDS_PORT &= ~_BV(LEDS_RCLK);
 

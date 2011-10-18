@@ -28,13 +28,14 @@
 	for use for reading the rules switches
 */
 void rules_shift_init(void) {
-	// Survival Rules
+
+	/* Survival Rules */
 	// Latch and Clock set to output
 	RULES_DDR |= _BV(RULES_SURV_PS) | _BV(RULES_SURV_CP);
 	// Data In as input
 	RULES_DDR &= ~_BV(RULES_SURV_DO);
 
-	// Birth Rules
+	/* Birth Rules */
 	// Latch and Clock set to output
 	RULES_DDR |= _BV(RULES_BIRTH_PS) | _BV(RULES_BIRTH_CP);
 	// Data In as input
@@ -60,7 +61,7 @@ uint16_t rules_read_dip(uint8_t rules_type) {
 	uint16_t rules = 0;
 	uint8_t cp, ps, dout; // Clock, P/S and Data Out pins
 	
-	// Get pin numbers for rule type we want to get
+	// Set pin numbers for rule type we want to get
 	if (rules_type == RULES_SURVIVAL) {
 		cp = RULES_SURV_CP;
 		ps = RULES_SURV_PS;
@@ -70,23 +71,24 @@ uint16_t rules_read_dip(uint8_t rules_type) {
 		ps = RULES_BIRTH_PS;
 		dout = RULES_BIRTH_DO;
 	} else {
-		cp = NULL;
-		ps = NULL;
-		dout = NULL;
+		return 0;
 	}
 
+	/* Read the rules as bits into a uint16_t */
 	RULES_PORT |= _BV(ps);
 	_delay_us(20);
 	RULES_PORT &= ~_BV(ps);
-
 	for (uint8_t i = 0; i < RULES_SHIFT_REG_COUNT * 8; i++) {
 		_delay_us(2);
 
-		if ( RULES_PIN & _BV(dout) )
+		if ( RULES_PIN & _BV(dout) ) {
 			rules |= (uint16_t)1 << i;
+		} 
+
 		_delay_us(20);
 		RULES_PORT &= ~_BV(cp);
 		RULES_PORT |= _BV(cp);
 	}
+
 	return rules;
 } 

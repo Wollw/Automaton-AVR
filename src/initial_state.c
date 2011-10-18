@@ -29,14 +29,13 @@ void initial_state_shift_init(void) {
 
 
 /*
-	Read the initial state from switches
+	Read the initial state from switches into a uint32_t
 */
 uint32_t initial_state_read() {
 	uint32_t initial_state = 0;
 	INITIAL_STATE_PORT |= _BV(INITIAL_STATE_PS);
 	_delay_us(20);
 	INITIAL_STATE_PORT &= ~_BV(INITIAL_STATE_PS);
-
 	for (uint8_t i = 0; i < INITIAL_STATE_SHIFT_REG_COUNT * 8; i++) {
 		_delay_us(2);
 

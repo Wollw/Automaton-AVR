@@ -11,7 +11,7 @@
  *		(3) 74HC595 for controlling 24 different LEDs
  *
  *	At start it sets the pins for input and output up.  It then reads the 
- *	rules and initializes the petridish.  While initializing the petridish
+ *	rules and initializes the automaton.  While initializing the automaton
  *	the MCU reads the initial state to seed the automaton.  It then enters
  *	the main loop.
  *
@@ -28,17 +28,15 @@
  *	While it should never be reached (due to the infinite nature of the loop)
  *	all allocated memory is freed after the loop.
 */
-
 #include <avr/io.h>
-#include <util/delay.h>
 #include "serial.h"
-#include "automaton.h"
 #include "initial_state.h"
 #include "rules.h"
 #include "leds.h"
-#include "config.h"
+#include "automaton.h"
 
-int main(void){
+// Setup the IO pins
+void setup(void) {
 	// Turn the serial port on
 	serial_init();
 
@@ -48,38 +46,30 @@ int main(void){
 	initial_state_shift_init();
 	rules_shift_init();
 	leds_shift_init();
+}
 
-	// Read the configuration information
-	// from the switches and initialize the
-	// automaton
-	rules_t rules;
-	rules_read(&rules);
+int main(void) {
+	// Setup pins
+	setup();
 
-	// Setup the petridish
-	petridish_t petridish = {
-		0, &rules, 0,
-		&automaton_init,
-		&automaton_update,
-		&automaton_destroy,
-		&leds_update,
-		&_delay_ms
-	};
-	petridish.init(&petridish, MY_CELL_COUNT);
+	// Setup the automaton
+	automaton_t petridish;
+	petridish.init = &automaton_init;
+	
+	petridish.init(&petridish);
 
-	// Start running the simulation
+	// Start the simulation loop
 	for (;;) {
 
 		petridish.display(&petridish);
-		petridish.delay(MY_DELAY_MS);
+		petridish.delay();
 		petridish.update(&petridish);
 
 	}
 
-	// Free the memory used by the cells in the petridish.
-	// Probably never called but it's here for good form.
+	// Free the memory used by the cells in the automaton.
+	// Program should never actually get here.
 	petridish.destroy(&petridish);
 
 	return 0;
 }
-
-

@@ -15,24 +15,26 @@ struct cell_struct {
 };
 typedef struct cell_struct cell_t;
 
-// Data about the "petridish" the simulation takes place in.
+// Data about the "automaton" the simulation takes place in.
 // The game board.
-struct petridish_struct;
-typedef struct petridish_struct petridish_t;
-struct petridish_struct {
+struct automaton_struct;
+typedef struct automaton_struct automaton_t;
+struct automaton_struct {
 	uint8_t size;
-	rules_t *rules;
 	cell_t *cells;
-	void (*init)(petridish_t *petridish, uint8_t size);
-	void (*update)(petridish_t *petridish);
-	void (*destroy)(petridish_t *petridish);
-	void (*display)(petridish_t *petridish);
-	void (*delay)(double __ms);
+	rules_t *rules;
+	void (*init)(automaton_t *automaton);
+	void (*update)(automaton_t *automaton);
+	void (*destroy)(automaton_t *automaton);
+	void (*display)(automaton_t *automaton);
+	void (*delay)(void);
 };
 
 /*
 	Update the state of the cells in the automaton based on the current generation
 */
-void automaton_init(petridish_t *petridish, uint8_t size);
-void automaton_destroy(petridish_t *petridish);
-void automaton_update(petridish_t *petridish);
+void automaton_init(automaton_t *automaton);
+void automaton_destroy(automaton_t *automaton);
+void automaton_update(automaton_t *automaton);
+void automaton_delay(void);
+void automaton_display(automaton_t *automaton);

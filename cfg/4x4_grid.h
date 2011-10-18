@@ -1,11 +1,8 @@
+// 4x4 grid
 #pragma once
-#include <stdlib.h>
-#include <avr/io.h>
 
-#define MY_DELAY_MS 500
-
-#define MY_CELL_COUNT 16
-#define MY_NEIGHBORS \
+#define CONFIG_DELAY_MS 500
+#define CONFIG_NEIGHBORS \
     {                \
         0b0000000000110010,	\
 		0b0000000001110101,	\
