@@ -52,24 +52,21 @@ int main(void) {
 	// Setup pins
 	setup();
 
-	// Setup the automaton
-	automaton_t petridish;
-	petridish.init = &automaton_init;
-	
-	petridish.init(&petridish);
+	// Create the petridish
+	automaton_t *petridish = automaton_new();
 
 	// Start the simulation loop
 	for (;;) {
 
-		petridish.display(&petridish);
-		petridish.delay();
-		petridish.update(&petridish);
+		petridish->display(petridish);
+		petridish->delay();
+		petridish->update(petridish);
 
 	}
 
 	// Free the memory used by the cells in the automaton.
 	// Program should never actually get here.
-	petridish.destroy(&petridish);
+	petridish->destroy(petridish);
 
 	return 0;
 }

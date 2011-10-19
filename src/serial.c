@@ -14,7 +14,7 @@
  *	setup the serial hardware
 */
 void serial_init(void) {
-	// Set baud rate (9600bps)
+	// Set baud rate
 	UBRR0H = (unsigned char) (MYUBBR >> 8);
 	UBRR0L = (unsigned char) MYUBBR;
 

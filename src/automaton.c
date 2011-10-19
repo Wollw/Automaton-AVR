@@ -4,10 +4,8 @@
  *
  *	The functions used to change the state of the automaton are defined here.
  *
- *	'automaton_init' is used to setup the initial state of the automaton and 
- *	gets passed the size (number of cells) of the automaton.  It gets the 
- *	initial life state of each cell by calling 'initial_state_read' from
- *	'initial_state.h'. It also sets up neighbors.
+ *	'automaton_new' is used to setup the initial state of the automaton.
+ *	returns a pointer to the automaton.
  *
  *	'automaton_destroy' simply frees the memory that was malloc'ed.
  *
@@ -35,10 +33,15 @@
 const uint32_t AUTOMATON_NEIGHBORS[] = CONFIG_NEIGHBORS;
 
 /*
- *	Initialize the state of the automaton.  Sets size based on passed value.
- *	Also assigns neighbors based on values in config.h
+ *	Create and return an automaton.  Sets size, neighbors, rules,
+ *	initial state, and needed functions before returning a pointer to
+ *	the new automaton.
 */
-void automaton_init(automaton_t *automaton) {
+automaton_t* automaton_new() {
+
+	// Create new automaton
+	automaton_t *automaton = (automaton_t*)malloc(sizeof(automaton_t));
+
 	// Set number of cells in automaton
 	automaton->size =
 		sizeof(AUTOMATON_NEIGHBORS) / sizeof(AUTOMATON_NEIGHBORS[0]);
@@ -46,7 +49,7 @@ void automaton_init(automaton_t *automaton) {
 	// Allocate memory for cells
 	automaton->cells = (cell_t *)malloc(automaton->size * sizeof(cell_t));
 	if (automaton->cells == NULL)
-		return;
+		return NULL;
 
 	// Set the cells' initial states
 	uint32_t initial_state = initial_state_read();
@@ -64,20 +67,26 @@ void automaton_init(automaton_t *automaton) {
 	automaton->destroy = &automaton_destroy;
 	automaton->delay = &automaton_delay;
 	automaton->display = &automaton_display;
+
+	return automaton;
 }
 
 /*
- * Deallocate the malloc'ed memory and cast cell pointer to NULL.
+ * Deallocate the malloc'ed memory
 */
 void automaton_destroy(automaton_t *automaton) {
 	free(automaton->cells);
 	automaton->cells = NULL;
+	free(automaton);
+	automaton = NULL;
 }
 
 /*
 	Update cells based on provided rules. Output over serial.
 */
 void automaton_update(automaton_t *automaton) {
+
+	uint8_t new_states[automaton->size];
 
 	for (uint8_t i = 0; i < automaton->size; i++) {
 		uint8_t n = 0;
@@ -90,23 +99,23 @@ void automaton_update(automaton_t *automaton) {
 		// Survival Rules
 		if (automaton->cells[i].state == ON) {
 			if ( (automaton->rules->survival >> n) & 1 )
-				automaton->cells[i].state_next = ON;
+				new_states[i] = ON;
 			else
-				automaton->cells[i].state_next = OFF;
+				new_states[i] = OFF;
 		}
 
 		// Birth Rules
 		else if (automaton->cells[i].state == OFF) {
 			if ( (automaton->rules->birth >> n) & 1 )
-				automaton->cells[i].state_next = ON;
+				new_states[i] = ON;
 			else
-				automaton->cells[i].state_next = OFF;
+				new_states[i] = OFF;
 		}
 	}
 
 	// Update state and calculate number of living cells
 	for (uint8_t i = 0; i < automaton->size; i++) {
-		automaton->cells[i].state = automaton->cells[i].state_next;
+		automaton->cells[i].state = new_states[i];
 	}
 }
 
@@ -122,7 +131,10 @@ void automaton_display(automaton_t *automaton) {
 	
 	// Also write to serial port
 	for (uint8_t i = 0; i < automaton->size; i++) {
-		serial_write('0'+automaton->cells[i].state);
+		if (automaton->cells[i].state)
+			serial_write('1');
+		else
+			serial_write('0');
 	}
 	serial_write('\r');
 	serial_write('\n');

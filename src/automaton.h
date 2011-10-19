@@ -9,31 +9,26 @@
 
 // Each instance of a cell holds current state, an id, and the neighbors
 struct cell_struct {
-	unsigned state :1;
-	unsigned state_next :1;
+	uint8_t state;
 	uint32_t neighbors; // neighbors bitfield
 };
 typedef struct cell_struct cell_t;
 
 // Data about the "automaton" the simulation takes place in.
-// The game board.
 struct automaton_struct;
 typedef struct automaton_struct automaton_t;
 struct automaton_struct {
 	uint8_t size;
 	cell_t *cells;
 	rules_t *rules;
-	void (*init)(automaton_t *automaton);
 	void (*update)(automaton_t *automaton);
 	void (*destroy)(automaton_t *automaton);
 	void (*display)(automaton_t *automaton);
 	void (*delay)(void);
 };
 
-/*
-	Update the state of the cells in the automaton based on the current generation
-*/
-void automaton_init(automaton_t *automaton);
+// functions for use with the automaton
+automaton_t* automaton_new(void);
 void automaton_destroy(automaton_t *automaton);
 void automaton_update(automaton_t *automaton);
 void automaton_delay(void);
