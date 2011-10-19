@@ -45,6 +45,8 @@ void setup(void) {
 	// and the initial state.
 	initial_state_shift_init();
 	rules_shift_init();
+
+	// Setup pins used to control LED shift registers
 	leds_shift_init();
 }
 
