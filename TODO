@@ -1,3 +1,4 @@
 * Add Audio syncing with ADC to change states with music
 * Stop using _ms_delay and use clock interrupts instead
 * Switch to PORTC for LEDs to leave hardware SPI open to use.
+* Allow for configuration over serial and saving to eeprom
