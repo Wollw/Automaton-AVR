@@ -1,4 +1,6 @@
 #pragma once
+#include <stdlib.h>
+#include <stdint.h>
 /*
 	For reading the initial state of the cell from the dip switches
 */

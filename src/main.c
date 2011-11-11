@@ -28,12 +28,15 @@
  *	While it should never be reached (due to the infinite nature of the loop)
  *	all allocated memory is freed after the loop.
 */
+#include <stdlib.h>
 #include <avr/io.h>
+#include <util/delay.h>
+#include "config.h"
 #include "serial.h"
 #include "initial_state.h"
 #include "rules.h"
 #include "leds.h"
-#include "automaton.h"
+#include "petridish.h"
 
 // Setup the IO pins
 void setup(void) {
@@ -55,15 +58,18 @@ int main(void) {
 	setup();
 
 	// Create the petridish
-	automaton_t *petridish = automaton_new();
+	petridish_t *petridish = petridish_new();
 
 	// Start the simulation loop
+	uint32_t state;
 	for (;;) {
+		state = petridish->get_state(petridish);
+		serial_write_bits_u32(state);
+		leds_change_state(state, petridish->size);
 
-		petridish->display(petridish);
-		petridish->delay();
+		_delay_ms(CONFIG_DELAY_MS);
+
 		petridish->update(petridish);
-
 	}
 
 	// Free the memory used by the cells in the automaton.

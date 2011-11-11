@@ -1,5 +1,7 @@
 #pragma once
-#include "automaton.h"
+#include <stdlib.h>
+#include <stdint.h>
+#include "petridish.h"
 
 // shift registers (74HC595) for LEDs
 #define LEDS_SHIFT_REG_COUNT	3
@@ -14,5 +16,4 @@
 // Functions for interacting with the output for leds
 // See leds.c for details
 void leds_shift_init(void);
-void leds_update(automaton_t *automaton);
-void leds_shift_out(uint32_t new_state, uint8_t pins_to_shift);
+void leds_change_state(uint32_t new_state, uint8_t pins_to_shift);

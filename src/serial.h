@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #define BAUDRATE	9600
 #define MYUBBR		( ( F_CPU / BAUDRATE / 16 ) - 1 )
 

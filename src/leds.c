@@ -2,16 +2,12 @@
  *
  *	(c) 2011 - David Ellis Shere
  *
- *	Functions used for handling the output LEDs of the automaton
+ *	Functions used for handling the output LEDs of the petridish
  *   
  *   'leds_shift_init' just sets up the pins needed to use the shift out
  *	registers that control the LEDs.
  *
- *	'leds_update' gets the state of each cell and packs it into a uint32_t.
- *	it then calls 'leds_shift_out' to do the actual output to the shift
- *	registers.
- *
- *	'leds_shift_out' just handles the shifting of the actual states to the
+ *	'leds_change_state' just handles the shifting of the actual states to the
  *	shift out registers.
  *
 */
@@ -28,27 +24,10 @@ void leds_shift_init(void) {
 }
 
 /*
-	Converts the cell states from the automaton
-	into individual bits to shift out with leds_shift_out
-*/
-void leds_update(automaton_t *automaton) {
-	uint32_t state = 0;
-
-	for (uint8_t i = 0; i < automaton->size; i++) {
-		if ( automaton->cells[i].state == ON )
-			state |= (uint32_t)1 << i;
-		else
-			state &= ~((uint32_t)1 << i);
-	}
-
-	leds_shift_out(state, automaton->size);
-}
-
-/*
 	shift a pin state out.  pins_to_shift is how many bits to shift
 	buffering with zero instead of the new_state bit values
 */
-void leds_shift_out(uint32_t new_state, uint8_t pins_to_shift) {
+void leds_change_state(uint32_t new_state, uint8_t pins_to_shift) {
 	LEDS_PORT &= ~_BV(LEDS_RCLK);
 
 	for (uint8_t i = 0; i < LEDS_SHIFT_REG_COUNT * 8; i++) {

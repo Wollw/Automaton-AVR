@@ -1,4 +1,6 @@
 #pragma once
+#include <stdlib.h>
+#include <stdint.h>
 
 #define	RULES_DDR	DDRD
 #define	RULES_PORT	PORTD

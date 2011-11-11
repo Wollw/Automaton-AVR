@@ -33,3 +33,18 @@ void serial_write(char c) {
 	while (!(UCSR0A & (_BV(UDRE0))));
 	UDR0 = c;
 }
+
+/*
+ *	output bits of a uint32_t
+*/
+void serial_write_bits_u32(uint32_t bits) {
+	int bit_count = 32;
+	for (uint8_t i = bit_count - 1; i >= 0; i--) {
+		if (bits & ((uint32_t)1 << i))
+			serial_write('1');
+		else
+			serial_write('0');
+	}
+	serial_write('\r');
+	serial_write('\n');	
+}
