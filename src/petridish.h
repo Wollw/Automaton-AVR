@@ -29,7 +29,7 @@ struct petridish_struct {
 };
 
 // functions for use with the petridish
-petridish_t* petridish_new(void);
+petridish_t* new_petridish(void);
 void petridish_destroy(petridish_t *petridish);
 void petridish_update(petridish_t *petridish);
 uint32_t petridish_get_state(petridish_t *petridish);

@@ -7,7 +7,7 @@
  *   'leds_shift_init' just sets up the pins needed to use the shift out
  *	registers that control the LEDs.
  *
- *	'leds_change_state' just handles the shifting of the actual states to the
+ *	'leds_change_state' handles the shifting of the actual states to the
  *	shift out registers.
  *
 */

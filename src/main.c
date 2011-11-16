@@ -58,7 +58,7 @@ int main(void) {
 	setup();
 
 	// Create the petridish
-	petridish_t *petridish = petridish_new();
+	petridish_t *petridish = new_petridish();
 
 	// Start the simulation loop
 	uint32_t state;

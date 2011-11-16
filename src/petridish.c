@@ -14,12 +14,9 @@
  *	state of each cell it makes the next state their current state.  It also
  *	outputs their new state over the serial port.
  *
- *	'petridish_delay' is just a call to _delay_ms with the delay specified in
- *	config.h
- *
  *	'petridish_get_state' converts and returns the cell states as a int32_t.
  *
- *	Format for serial output starts with bit 0 on the far LEFT of the screen.
+ *	Format for serial out starts with bit 0 on the far LEFT of the screen.
  *	Example: '011' means cell 0 is off, and cells 1 and 2 are on.
  *
 */
@@ -35,7 +32,7 @@ const uint32_t AUTOMATON_NEIGHBORS[] = CONFIG_NEIGHBORS;
  *	initial state, and needed functions before returning a pointer to
  *	the new petridish.
 */
-petridish_t* petridish_new() {
+petridish_t* new_petridish() {
 
 	// Create new petridish
 	petridish_t *petridish = (petridish_t*)malloc(sizeof(petridish_t));
