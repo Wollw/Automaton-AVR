@@ -8,6 +8,7 @@
 */
 #include <avr/io.h>
 #include <util/delay.h>
+#include "config.h"
 #include "serial.h"
 
 /*
@@ -38,13 +39,13 @@ void serial_write(char c) {
  *	output bits of a uint32_t
 */
 void serial_write_bits_u32(uint32_t bits) {
-	int bit_count = 32;
-	for (uint8_t i = bit_count - 1; i >= 0; i--) {
+	uint32_t bit_count = 32;
+	for (uint8_t i = 0; i < bit_count; i++) {
 		if (bits & ((uint32_t)1 << i))
 			serial_write('1');
 		else
 			serial_write('0');
 	}
-	serial_write('\r');
 	serial_write('\n');	
+	serial_write('\r');
 }

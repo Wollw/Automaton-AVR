@@ -15,16 +15,19 @@
 */
 #include <avr/io.h>
 #include <util/delay.h>
+#include "config.h"
 #include "initial_state.h"
 
 /*
 	Setup pins for reading initia state
 */
 void initial_state_shift_init(void) {
+
 	// Latch and Clock set to output
 	DDRC |= _BV(INITIAL_STATE_PS) | _BV(INITIAL_STATE_CP);
 	// Data In as input
 	DDRC &= ~_BV(INITIAL_STATE_DO);
+
 }
 
 
@@ -32,6 +35,9 @@ void initial_state_shift_init(void) {
 	Read the initial state from switches into a uint32_t
 */
 uint32_t initial_state_read() {
+
+	// Use hard coded initial state if no switches are being used
+	#ifdef	CONFIG_USE_SWITCHES_FOR_SETTINGS
 	uint32_t initial_state = 0;
 	INITIAL_STATE_PORT |= _BV(INITIAL_STATE_PS);
 	_delay_us(20);
@@ -47,6 +53,10 @@ uint32_t initial_state_read() {
 		_delay_us(20);
 		INITIAL_STATE_PORT |= _BV(INITIAL_STATE_CP);
 	}
+	#else
+	uint32_t initial_state = CONFIG_INITIAL_STATE;
+	#endif
 
 	return initial_state;
+	
 } 

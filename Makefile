@@ -42,7 +42,7 @@ F_CPU = 8000000
 # Serial communication settings
 PICOCOM = picocom
 BAUDRATE = 9600
-SERIALPORT = /dev/tty.usbserial-A4006DGP
+SERIALPORT = /dev/ttyUSB0
 
 
 # Output format. (can be srec, ihex, binary)

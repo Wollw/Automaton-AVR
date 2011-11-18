@@ -19,9 +19,8 @@
 */
 #include <avr/io.h>
 #include <util/delay.h>
+#include "config.h"
 #include "rules.h"
-
-#define NULL 0
 
 /*
 	Initialize the pins used for the 4021 shift register
@@ -40,6 +39,7 @@ void rules_shift_init(void) {
 	RULES_DDR |= _BV(RULES_BIRTH_PS) | _BV(RULES_BIRTH_CP);
 	// Data In as input
 	RULES_DDR &= ~_BV(RULES_BIRTH_DO);
+
 }
 
 /*
@@ -47,8 +47,14 @@ void rules_shift_init(void) {
 	rules returned into a provided rules_t variable.
 */
 void rules_read(rules_t *rules) {
+	// Use hard coded values if no switches present
+	#ifdef CONFIG_USE_SWITCHES_FOR_SETTINGS
 	rules->survival = rules_read_dip(RULES_SURVIVAL);
 	rules->birth = rules_read_dip(RULES_BIRTH);
+	#else
+	rules->survival = CONFIG_RULES_SURV;
+	rules->birth = CONFIG_RULES_BIRTH;
+	#endif
 }
 
 /*

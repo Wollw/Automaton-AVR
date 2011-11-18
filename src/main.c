@@ -40,14 +40,19 @@
 
 // Setup the IO pins
 void setup(void) {
+
+	#ifdef CONFIG_USE_SERIAL
 	// Turn the serial port on
 	serial_init();
+	#endif
 
+	#ifdef	CONFIG_USE_SWITCHES_FOR_SETTINGS
 	// Initialize the shift registers connected to
 	// the switches used to configure the rules
 	// and the initial state.
 	initial_state_shift_init();
 	rules_shift_init();
+	#endif
 
 	// Setup pins used to control LED shift registers
 	leds_shift_init();
@@ -64,7 +69,11 @@ int main(void) {
 	uint32_t state;
 	for (;;) {
 		state = petridish->get_state(petridish);
+
+		#ifdef CONFIG_USE_SERIAL
 		serial_write_bits_u32(state);
+		#endif
+
 		leds_change_state(state, petridish->size);
 
 		_delay_ms(CONFIG_DELAY_MS);
