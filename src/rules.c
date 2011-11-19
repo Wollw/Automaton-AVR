@@ -26,6 +26,7 @@
 	Initialize the pins used for the 4021 shift register
 	for use for reading the rules switches
 */
+#ifdef	CONFIG_USE_SWITCHES_FOR_SETTINGS
 void rules_shift_init(void) {
 
 	/* Survival Rules */
@@ -41,6 +42,7 @@ void rules_shift_init(void) {
 	RULES_DDR &= ~_BV(RULES_BIRTH_DO);
 
 }
+#endif
 
 /*
 	This function handles the calls to rules_read and puts the
@@ -63,6 +65,7 @@ void rules_read(rules_t *rules) {
 	shift register. Returns the rules as a 16 bit value each
 	bit of which represents a switch state. bit 0 is switch 1.
 */
+#ifdef CONFIG_USE_SWITCHES_FOR_SETTINGS
 uint16_t rules_read_dip(uint8_t rules_type) {
 	uint16_t rules = 0;
 	uint8_t cp, ps, dout; // Clock, P/S and Data Out pins
@@ -98,3 +101,4 @@ uint16_t rules_read_dip(uint8_t rules_type) {
 
 	return rules;
 } 
+#endif

@@ -6,10 +6,12 @@
  *
  *	'serial_write' writes a char to serial output
 */
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include "config.h"
 #include "serial.h"
+#ifdef CONFIG_USE_SERIAL
 
 /*
  *	setup the serial hardware
@@ -49,3 +51,4 @@ void serial_write_bits_u32(uint32_t bits) {
 	serial_write('\n');	
 	serial_write('\r');
 }
+#endif

@@ -13,7 +13,7 @@
 
 // Time each turn lasts (the amount of time a unique state of the
 // automaton is displayed)
-#define CONFIG_DELAY_MS 500
+#define CONFIG_DELAY_MS 1000
 
 /*
  *	An array of neighboring cells for each cell.

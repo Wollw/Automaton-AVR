@@ -21,6 +21,7 @@
 /*
 	Setup pins for reading initia state
 */
+#ifdef CONFIG_USE_SWITCHES_FOR_SETTINGS
 void initial_state_shift_init(void) {
 
 	// Latch and Clock set to output
@@ -29,7 +30,7 @@ void initial_state_shift_init(void) {
 	DDRC &= ~_BV(INITIAL_STATE_DO);
 
 }
-
+#endif
 
 /*
 	Read the initial state from switches into a uint32_t

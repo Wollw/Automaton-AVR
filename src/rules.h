@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#ifdef	CONFIG_USE_SWITCHES_FOR_SETTINGS
+
 #define	RULES_DDR	DDRD
 #define	RULES_PORT	PORTD
 #define	RULES_PIN	PIND
@@ -16,8 +18,11 @@
 #define RULES_BIRTH_PS	PD7 // Latch
 #define RULES_BIRTH_DO	PD5 // Data Out
 
+
 // Number of shift registers used for rules
 #define RULES_SHIFT_REG_COUNT 2
+
+#endif
 
 // IDs for rule sets
 #define RULES_SURVIVAL  1

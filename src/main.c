@@ -62,8 +62,13 @@ int main(void) {
 	// Setup pins
 	setup();
 
+
 	// Create the petridish
 	petridish_t *petridish = new_petridish();
+
+	// LED test
+	leds_change_state(0b11111111111111111111111111111111,32);
+	_delay_ms(1000);
 
 	// Start the simulation loop
 	uint32_t state;

@@ -1,5 +1,15 @@
 // 3x3 grid
+
+// Include once
 #pragma once
+#ifndef CONFIGED
+#define CONFIGED
+
+#define CONFIG_USE_SERIAL
+#define	CONFIG_USE_SWITCHES_FOR_SETTINGS
+#define CONFIG_RULES_BIRTH	0b1000
+#define CONFIG_RULES_SURV	0b1100
+#define CONFIG_INITIAL_STATE	0b000111000
 
 // Time each turn lasts (the amount of time a unique state of the
 // automaton is displayed)
@@ -25,3 +35,4 @@
         0b101111000, \
         0b010110000 \
     }
+#endif
