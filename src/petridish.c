@@ -70,6 +70,8 @@ petridish_t* new_petridish() {
  * Deallocate the malloc'ed memory
 */
 void petridish_destroy(petridish_t *petridish) {
+	free(petridish->rules);
+	petridish->rules = NULL;
 	free(petridish->cells);
 	petridish->cells = NULL;
 	free(petridish);
