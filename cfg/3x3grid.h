@@ -5,15 +5,15 @@
 #ifndef CONFIGED
 #define CONFIGED
 
-#define CONFIG_USE_SERIAL
-#define	CONFIG_USE_SWITCHES_FOR_SETTINGS
-#define CONFIG_RULES_BIRTH	0b1000
+//#define CONFIG_USE_SERIAL
+//#define	CONFIG_USE_SWITCHES_FOR_SETTINGS
 #define CONFIG_RULES_SURV	0b1100
+#define CONFIG_RULES_BIRTH	0b1000
 #define CONFIG_INITIAL_STATE	0b000111000
 
 // Time each turn lasts (the amount of time a unique state of the
 // automaton is displayed)
-#define CONFIG_DELAY_MS 500
+#define CONFIG_DELAY_MS 1000
 
 /*
  *	An array of neighboring cells for each cell.
@@ -33,6 +33,6 @@
         0b110010110, \
         0b010011000, \
         0b101111000, \
-        0b010110000 \
+        0b010110000, \
     }
 #endif
