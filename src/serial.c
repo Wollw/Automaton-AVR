@@ -10,8 +10,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "config.h"
-#include "serial.h"
 #ifdef CONFIG_USE_SERIAL
+#include "serial.h"
 
 /*
  *	setup the serial hardware

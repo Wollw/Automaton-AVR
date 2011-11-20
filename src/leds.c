@@ -4,7 +4,7 @@
  *
  *	Functions used for handling the output LEDs of the petridish
  *   
- *   'leds_shift_init' just sets up the pins needed to use the shift out
+ *  'leds_shift_init' just sets up the pins needed to use the shift out
  *	registers that control the LEDs.
  *
  *	'leds_change_state' handles the shifting of the actual states to the

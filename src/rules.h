@@ -40,6 +40,8 @@ typedef struct rules_struct rules_t;
 	See rules.c for details
 */
 
-void rules_shift_init(void);
 void rules_read(rules_t *rules);
+#ifdef CONFIG_USE_SWITCHES_FOR_SETTINGS
+void rules_shift_init(void);
 uint16_t rules_read_dip(uint8_t rules_type);
+#endif

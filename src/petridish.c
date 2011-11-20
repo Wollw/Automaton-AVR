@@ -55,6 +55,7 @@ petridish_t* new_petridish() {
 	}
 
 	// Obtain the rules for the petridish
+	petridish->rules = (rules_t *)malloc(sizeof(rules_t));
 	rules_read(petridish->rules);
 
 	// Set the petridish functions

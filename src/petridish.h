@@ -11,8 +11,8 @@
 
 // Each instance of a cell holds current state, an id, and the neighbors
 struct cell_struct {
-	uint8_t state;
 	uint32_t neighbors; // neighbors bitfield
+	uint8_t state;
 };
 typedef struct cell_struct cell_t;
 
