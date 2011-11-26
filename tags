@@ -1,0 +1,170 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+-set-section-flags	Makefile	/^	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \\$/;"	m
+ALL_ASFLAGS	Makefile	/^ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)$/;"	m
+ALL_CFLAGS	Makefile	/^ALL_CFLAGS = -mmcu=$(MCU) -I. $(CFLAGS) $(GENDEPFLAGS)$/;"	m
+ASFLAGS	Makefile	/^ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs $/;"	m
+ASRC	Makefile	/^ASRC = $/;"	m
+AUTOMATON_NEIGHBORS	src/petridish.c	/^const uint32_t AUTOMATON_NEIGHBORS[] = CONFIG_NEIGHBORS;$/;"	v
+AVRDUDE	Makefile	/^AVRDUDE = avrdude$/;"	m
+AVRDUDE_FLAGS	Makefile	/^AVRDUDE_FLAGS = -p $(MCU) -c $(AVRDUDE_PROGRAMMER)$/;"	m
+AVRDUDE_PORT	Makefile	/^AVRDUDE_PORT = lpt1$/;"	m
+AVRDUDE_PROGRAMMER	Makefile	/^AVRDUDE_PROGRAMMER = usbtiny$/;"	m
+AVRDUDE_WRITE_FLASH	Makefile	/^AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex$/;"	m
+AVRMEM	Makefile	/^AVRMEM = avr-mem.sh $(TARGET).elf $(MCU)$/;"	m
+BAUDRATE	Makefile	/^BAUDRATE = 9600$/;"	m
+BAUDRATE	src/serial.h	4;"	d
+CC	Makefile	/^CC = avr-gcc$/;"	m
+CDEFS	Makefile	/^CDEFS = -DF_CPU=$(F_CPU)UL$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -g$(DEBUG)$/;"	m
+CINCS	Makefile	/^CINCS =$/;"	m
+COFFCONVERT	Makefile	/^COFFCONVERT=$(OBJCOPY) --debugging \\$/;"	m
+CONFIGED	cfg/3x3grid.h	6;"	d
+CONFIGED	cfg/triangle_squares.h	4;"	d
+CONFIGURED	src/config.h	3;"	d
+CONFIG_DELAY_MS	cfg/3x3grid.h	16;"	d
+CONFIG_DELAY_MS	cfg/4x4grid.h	4;"	d
+CONFIG_DELAY_MS	cfg/triangle_squares.h	17;"	d
+CONFIG_DELAY_MS	cfg/triangle_squares_ART33B_PROJECT.h	5;"	d
+CONFIG_DELAY_MS	src/config.h	10;"	d
+CONFIG_INITIAL_STATE	cfg/3x3grid.h	12;"	d
+CONFIG_INITIAL_STATE	cfg/triangle_squares.h	12;"	d
+CONFIG_INITIAL_STATE	src/config.h	9;"	d
+CONFIG_NEIGHBORS	cfg/3x3grid.h	26;"	d
+CONFIG_NEIGHBORS	cfg/4x4grid.h	5;"	d
+CONFIG_NEIGHBORS	cfg/triangle_squares.h	19;"	d
+CONFIG_NEIGHBORS	cfg/triangle_squares_ART33B_PROJECT.h	8;"	d
+CONFIG_NEIGHBORS	src/config.h	11;"	d
+CONFIG_RULES_BIRTH	cfg/3x3grid.h	11;"	d
+CONFIG_RULES_BIRTH	cfg/triangle_squares.h	10;"	d
+CONFIG_RULES_BIRTH	src/config.h	8;"	d
+CONFIG_RULES_SURV	cfg/3x3grid.h	10;"	d
+CONFIG_RULES_SURV	cfg/triangle_squares.h	11;"	d
+CONFIG_RULES_SURV	src/config.h	7;"	d
+CONFIG_USE_SERIAL	cfg/triangle_squares.h	6;"	d
+CONFIG_USE_SWITCHES_FOR_SETTINGS	cfg/triangle_squares.h	8;"	d
+COPY	Makefile	/^COPY = cp$/;"	m
+CSTANDARD	Makefile	/^CSTANDARD = -std=gnu99$/;"	m
+DEBUG	Makefile	/^DEBUG = dwarf-2$/;"	m
+DEBUG_BACKEND	Makefile	/^DEBUG_BACKEND = avarice$/;"	m
+DEBUG_HOST	Makefile	/^DEBUG_HOST = localhost$/;"	m
+DEBUG_MFREQ	Makefile	/^DEBUG_MFREQ = $(F_CPU)$/;"	m
+DEBUG_PORT	Makefile	/^DEBUG_PORT = 4242$/;"	m
+DEBUG_UI	Makefile	/^DEBUG_UI = insight$/;"	m
+EFUSE	Makefile	/^EFUSE = 0x07$/;"	m
+ELFSIZE	Makefile	/^ELFSIZE = $(SIZE) -C $(TARGET).elf$/;"	m
+EXTMEMOPTS	Makefile	/^EXTMEMOPTS =$/;"	m
+EXTRAINCDIRS	Makefile	/^EXTRAINCDIRS = $/;"	m
+FORMAT	Makefile	/^FORMAT = ihex$/;"	m
+F_CPU	Makefile	/^F_CPU = 8000000$/;"	m
+GDBINIT_FILE	Makefile	/^GDBINIT_FILE = __avr_gdbinit$/;"	m
+GENDEPFLAGS	Makefile	/^GENDEPFLAGS = -MD -MP -MF .dep\/$(@F).d$/;"	m
+HEXSIZE	Makefile	/^HEXSIZE = $(SIZE) --target=$(FORMAT) $(TARGET).hex$/;"	m
+HFUSE	Makefile	/^HFUSE = 0xd9$/;"	m
+INITIAL_STATE_CP	src/initial_state.h	14;"	d
+INITIAL_STATE_DDR	src/initial_state.h	11;"	d
+INITIAL_STATE_DO	src/initial_state.h	16;"	d
+INITIAL_STATE_PINS	src/initial_state.h	13;"	d
+INITIAL_STATE_PORT	src/initial_state.h	12;"	d
+INITIAL_STATE_PS	src/initial_state.h	15;"	d
+INITIAL_STATE_SHIFT_REG_COUNT	src/initial_state.h	10;"	d
+JTAG_DEV	Makefile	/^JTAG_DEV = \/dev\/com1$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS = -Wl,-Map=$(TARGET).map,--cref$/;"	m
+LEDS_DDR	src/leds.h	10;"	d
+LEDS_PORT	src/leds.h	11;"	d
+LEDS_RCLK	src/leds.h	12;"	d
+LEDS_SER	src/leds.h	13;"	d
+LEDS_SHIFT_REG_COUNT	src/leds.h	7;"	d
+LEDS_SRCLK	src/leds.h	14;"	d
+LFUSE	Makefile	/^LFUSE = 0xe2$/;"	m
+LST	Makefile	/^LST = $(SRC:.c=.lst) $(ASRC:.S=.lst) $/;"	m
+MATH_LIB	Makefile	/^MATH_LIB = -lm$/;"	m
+MCU	Makefile	/^MCU = atmega328p$/;"	m
+MSG_ASSEMBLING	Makefile	/^MSG_ASSEMBLING = Assembling:$/;"	m
+MSG_BEGIN	Makefile	/^MSG_BEGIN = -------- begin --------$/;"	m
+MSG_CLEANING	Makefile	/^MSG_CLEANING = Cleaning project:$/;"	m
+MSG_COFF	Makefile	/^MSG_COFF = Converting to AVR COFF:$/;"	m
+MSG_COMPILING	Makefile	/^MSG_COMPILING = Compiling:$/;"	m
+MSG_EEPROM	Makefile	/^MSG_EEPROM = Creating load file for EEPROM:$/;"	m
+MSG_END	Makefile	/^MSG_END = --------  end  --------$/;"	m
+MSG_ERRORS_NONE	Makefile	/^MSG_ERRORS_NONE = Errors: none$/;"	m
+MSG_EXTENDED_COFF	Makefile	/^MSG_EXTENDED_COFF = Converting to AVR Extended COFF:$/;"	m
+MSG_EXTENDED_LISTING	Makefile	/^MSG_EXTENDED_LISTING = Creating Extended Listing:$/;"	m
+MSG_FLASH	Makefile	/^MSG_FLASH = Creating load file for Flash:$/;"	m
+MSG_LINKING	Makefile	/^MSG_LINKING = Linking:$/;"	m
+MSG_SIZE_AFTER	Makefile	/^MSG_SIZE_AFTER = Size after:$/;"	m
+MSG_SIZE_BEFORE	Makefile	/^MSG_SIZE_BEFORE = Size before: $/;"	m
+MSG_SYMBOL_TABLE	Makefile	/^MSG_SYMBOL_TABLE = Creating Symbol Table:$/;"	m
+MYUBBR	src/serial.h	5;"	d
+NM	Makefile	/^NM = avr-nm$/;"	m
+OBJ	Makefile	/^OBJ = $(SRC:.c=.o) $(ASRC:.S=.o) $/;"	m
+OBJCOPY	Makefile	/^OBJCOPY = avr-objcopy$/;"	m
+OBJDUMP	Makefile	/^OBJDUMP = avr-objdump$/;"	m
+OFF	src/petridish.h	10;"	d
+ON	src/petridish.h	9;"	d
+OPT	Makefile	/^OPT = s$/;"	m
+PICOCOM	Makefile	/^PICOCOM = picocom$/;"	m
+PRINTF_LIB	Makefile	/^PRINTF_LIB = $/;"	m
+PRINTF_LIB_FLOAT	Makefile	/^PRINTF_LIB_FLOAT = -Wl,-u,vfprintf -lprintf_flt$/;"	m
+PRINTF_LIB_MIN	Makefile	/^PRINTF_LIB_MIN = -Wl,-u,vfprintf -lprintf_min$/;"	m
+REMOVE	Makefile	/^REMOVE = rm -f$/;"	m
+RULES_BIRTH	src/rules.h	29;"	d
+RULES_BIRTH_CP	src/rules.h	17;"	d
+RULES_BIRTH_DO	src/rules.h	19;"	d
+RULES_BIRTH_PS	src/rules.h	18;"	d
+RULES_CP	src/serial.h	7;"	d
+RULES_DDR	src/rules.h	7;"	d
+RULES_DO	src/serial.h	9;"	d
+RULES_PIN	src/rules.h	9;"	d
+RULES_PORT	src/rules.h	8;"	d
+RULES_PS	src/serial.h	8;"	d
+RULES_SHIFT_REG_COUNT	src/rules.h	23;"	d
+RULES_SURVIVAL	src/rules.h	28;"	d
+RULES_SURV_CP	src/rules.h	12;"	d
+RULES_SURV_DO	src/rules.h	14;"	d
+RULES_SURV_PS	src/rules.h	13;"	d
+SCANF_LIB	Makefile	/^SCANF_LIB = $/;"	m
+SCANF_LIB_FLOAT	Makefile	/^SCANF_LIB_FLOAT = -Wl,-u,vfscanf -lscanf_flt$/;"	m
+SCANF_LIB_MIN	Makefile	/^SCANF_LIB_MIN = -Wl,-u,vfscanf -lscanf_min$/;"	m
+SERIALPORT	Makefile	/^SERIALPORT = \/dev\/ttyUSB0$/;"	m
+SHELL	Makefile	/^SHELL = sh$/;"	m
+SIZE	Makefile	/^SIZE = avr-size$/;"	m
+SRC	Makefile	/^SRC = $(wildcard src\/*.c) $(wildcard src\/*.s)$/;"	m
+TARGET	Makefile	/^TARGET = main$/;"	m
+WINSHELL	Makefile	/^WINSHELL = cmd$/;"	m
+birth	src/rules.h	/^	uint16_t birth;$/;"	m	struct:rules_struct
+cell_struct	src/petridish.h	/^struct cell_struct {$/;"	s
+cell_t	src/petridish.h	/^typedef struct cell_struct cell_t;$/;"	t	typeref:struct:cell_struct
+cells	src/petridish.h	/^	cell_t *cells;$/;"	m	struct:petridish_struct
+destroy	src/petridish.h	/^	void (*destroy)(petridish_t *petridish);$/;"	m	struct:petridish_struct
+get_state	src/petridish.h	/^	uint32_t (*get_state)(petridish_t *petridish);$/;"	m	struct:petridish_struct
+initial_state_read	src/initial_state.c	/^uint32_t initial_state_read() {$/;"	f
+initial_state_shift_init	src/initial_state.c	/^void initial_state_shift_init(void) {$/;"	f
+leds_change_state	src/leds.c	/^void leds_change_state(uint32_t new_state, uint8_t pins_to_shift) {$/;"	f
+leds_shift_init	src/leds.c	/^void leds_shift_init(void) {$/;"	f
+main	src/main.c	/^int main(void) {$/;"	f
+neighbors	src/petridish.h	/^	uint32_t neighbors; \/\/ neighbors bitfield$/;"	m	struct:cell_struct
+new_petridish	src/petridish.c	/^petridish_t* new_petridish() {$/;"	f
+petridish_destroy	src/petridish.c	/^void petridish_destroy(petridish_t *petridish) {$/;"	f
+petridish_get_state	src/petridish.c	/^uint32_t petridish_get_state(petridish_t *petridish) {$/;"	f
+petridish_struct	src/petridish.h	/^struct petridish_struct {$/;"	s
+petridish_t	src/petridish.h	/^typedef struct petridish_struct petridish_t;$/;"	t	typeref:struct:petridish_struct
+petridish_update	src/petridish.c	/^void petridish_update(petridish_t *petridish) {$/;"	f
+rules	src/petridish.h	/^	rules_t *rules;$/;"	m	struct:petridish_struct
+rules_read	src/rules.c	/^void rules_read(rules_t *rules) {$/;"	f
+rules_read_dip	src/rules.c	/^uint16_t rules_read_dip(uint8_t rules_type) {$/;"	f
+rules_shift_init	src/rules.c	/^void rules_shift_init(void) {$/;"	f
+rules_struct	src/rules.h	/^struct rules_struct {$/;"	s
+rules_t	src/rules.h	/^typedef struct rules_struct rules_t;$/;"	t	typeref:struct:rules_struct
+serial_init	src/serial.c	/^void serial_init(void) {$/;"	f
+serial_write	src/serial.c	/^void serial_write(char c) {$/;"	f
+serial_write_bits_u32	src/serial.c	/^void serial_write_bits_u32(uint32_t bits) {$/;"	f
+setup	src/main.c	/^void setup(void) {$/;"	f
+size	src/petridish.h	/^	uint8_t size;$/;"	m	struct:petridish_struct
+state	src/petridish.h	/^	uint8_t state;$/;"	m	struct:cell_struct
+survival	src/rules.h	/^	uint16_t survival;$/;"	m	struct:rules_struct
+update	src/petridish.h	/^	void (*update)(petridish_t *petridish);$/;"	m	struct:petridish_struct
