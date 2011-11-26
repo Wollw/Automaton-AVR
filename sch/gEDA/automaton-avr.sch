@@ -3,11 +3,11 @@ C 40000 40000 0 0 0 title-B.sym
 C 41000 40400 1 0 0 ATtiny85.sym
 {
 T 43300 42700 5 10 1 1 0 6 1
-refdes=U?
+refdes=MCU
 T 41300 42850 5 10 0 0 0 0 1
 device=ATtiny85
 T 41300 43050 5 10 0 0 0 0 1
-footprint=SO8
+footprint=DIP8
 }
 C 41500 47900 1 0 0 74595-1.sym
 {
@@ -41,7 +41,7 @@ C 52100 42900 1 0 0 LM323T.sym
 T 52400 44600 5 10 0 0 0 0 1
 device=LM323T
 T 53800 44300 5 10 1 1 0 6 1
-refdes=U?
+refdes=REG
 }
 C 51500 42800 1 90 0 diode-1.sym
 {
