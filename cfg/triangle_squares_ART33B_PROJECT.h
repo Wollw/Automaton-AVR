@@ -1,10 +1,13 @@
-// 3x3 grid
 #pragma once
-// Time each turn lasts (the amount of time a unique state of the
-// automaton is displayed)
-#define CONFIG_DELAY_MS 500
+#ifndef CONFIGURED
+#define CONFIGURED
 
-// Cell neighbors
+//#define CONFIG_USE_SERIAL
+//#define	CONFIG_USE_SWITCHES_FOR_SETTINGS
+#define	CONFIG_RULES_SURV		0b11000010
+#define	CONFIG_RULES_BIRTH		0b01111010
+#define	CONFIG_INITIAL_STATE	0b0001000100010101011
+#define CONFIG_DELAY_MS 500
 #define CONFIG_NEIGHBORS \
     {                \
 		0b0000000000001111110,	\
@@ -27,3 +30,5 @@
 		0b1011000000001100000,	\
 		0b0111000000000000000	\
     }	
+
+#endif
