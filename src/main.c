@@ -30,13 +30,14 @@
 */
 #include <stdlib.h>
 #include <avr/io.h>
-#include <util/delay.h>
 #include "config.h"
 #include "serial.h"
 #include "initial_state.h"
 #include "rules.h"
 #include "leds.h"
 #include "petridish.h"
+#include "adc.h"
+#include "delay.h"
 
 // Setup the IO pins
 void setup(void) {
@@ -54,6 +55,11 @@ void setup(void) {
 	rules_shift_init();
 	#endif
 
+	#ifdef	CONFIG_USE_ADC_FOR_DELAY_TIME
+	// setup the prescaler for ADC reading if needed
+	adc_init(ADC_PRESCALE);
+	#endif
+
 	// Setup pins used to control LED shift registers
 	leds_shift_init();
 }
@@ -68,7 +74,7 @@ int main(void) {
 
 	// Test LEDs
 	leds_change_state(0xFFFFFFFF,petridish->size);
-	_delay_ms(1000);
+	delay_ms(1000);
 
 	// Start the simulation loop
 	uint32_t state;
@@ -81,7 +87,18 @@ int main(void) {
 
 		leds_change_state(state, petridish->size);
 
-		_delay_ms(CONFIG_DELAY_MS);
+		#ifdef	CONFIG_USE_ADC_FOR_DELAY_TIME
+		#ifdef	CONFIG_DELAY_MIN && CONFIG_DELAY_MAX
+		delay_ms_scaled(
+			CONFIG_DELAY_MIN,
+			CONFIG_DELAY_MAX,
+			adc_read(ADC_PIN));
+		#else
+		delay_ms(adc_read(ADC_PIN));
+		#endif
+		#else
+		delay_ms(CONFIG_DELAY_MS);
+		#endif
 
 		petridish->update(petridish);
 	}
