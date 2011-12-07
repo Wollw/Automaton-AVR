@@ -5,6 +5,8 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 -set-section-flags	Makefile	/^	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \\$/;"	m
+ADC_PIN	src/adc.h	6;"	d
+ADC_PRESCALE	src/adc.h	7;"	d
 ALL_ASFLAGS	Makefile	/^ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)$/;"	m
 ALL_CFLAGS	Makefile	/^ALL_CFLAGS = -mmcu=$(MCU) -I. $(CFLAGS) $(GENDEPFLAGS)$/;"	m
 ASFLAGS	Makefile	/^ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs $/;"	m
@@ -25,30 +27,36 @@ CINCS	Makefile	/^CINCS =$/;"	m
 COFFCONVERT	Makefile	/^COFFCONVERT=$(OBJCOPY) --debugging \\$/;"	m
 CONFIGED	cfg/3x3grid.h	6;"	d
 CONFIGED	cfg/triangle_squares.h	4;"	d
+CONFIGURED	cfg/triangle_squares_ART33B_PROJECT.h	3;"	d
 CONFIGURED	src/config.h	3;"	d
+CONFIG_DELAY_MAX	src/config.h	13;"	d
+CONFIG_DELAY_MIN	src/config.h	12;"	d
 CONFIG_DELAY_MS	cfg/3x3grid.h	16;"	d
 CONFIG_DELAY_MS	cfg/4x4grid.h	4;"	d
 CONFIG_DELAY_MS	cfg/triangle_squares.h	17;"	d
-CONFIG_DELAY_MS	cfg/triangle_squares_ART33B_PROJECT.h	5;"	d
-CONFIG_DELAY_MS	src/config.h	10;"	d
+CONFIG_DELAY_MS	cfg/triangle_squares_ART33B_PROJECT.h	10;"	d
 CONFIG_INITIAL_STATE	cfg/3x3grid.h	12;"	d
 CONFIG_INITIAL_STATE	cfg/triangle_squares.h	12;"	d
+CONFIG_INITIAL_STATE	cfg/triangle_squares_ART33B_PROJECT.h	9;"	d
 CONFIG_INITIAL_STATE	src/config.h	9;"	d
 CONFIG_NEIGHBORS	cfg/3x3grid.h	26;"	d
 CONFIG_NEIGHBORS	cfg/4x4grid.h	5;"	d
 CONFIG_NEIGHBORS	cfg/triangle_squares.h	19;"	d
-CONFIG_NEIGHBORS	cfg/triangle_squares_ART33B_PROJECT.h	8;"	d
-CONFIG_NEIGHBORS	src/config.h	11;"	d
+CONFIG_NEIGHBORS	cfg/triangle_squares_ART33B_PROJECT.h	11;"	d
+CONFIG_NEIGHBORS	src/config.h	14;"	d
 CONFIG_RULES_BIRTH	cfg/3x3grid.h	11;"	d
 CONFIG_RULES_BIRTH	cfg/triangle_squares.h	10;"	d
+CONFIG_RULES_BIRTH	cfg/triangle_squares_ART33B_PROJECT.h	8;"	d
 CONFIG_RULES_BIRTH	src/config.h	8;"	d
 CONFIG_RULES_SURV	cfg/3x3grid.h	10;"	d
 CONFIG_RULES_SURV	cfg/triangle_squares.h	11;"	d
+CONFIG_RULES_SURV	cfg/triangle_squares_ART33B_PROJECT.h	7;"	d
 CONFIG_RULES_SURV	src/config.h	7;"	d
+CONFIG_USE_ADC_FOR_DELAY_TIME	src/config.h	11;"	d
 CONFIG_USE_SERIAL	cfg/triangle_squares.h	6;"	d
 CONFIG_USE_SWITCHES_FOR_SETTINGS	cfg/triangle_squares.h	8;"	d
 COPY	Makefile	/^COPY = cp$/;"	m
-CSTANDARD	Makefile	/^CSTANDARD = -std=gnu99$/;"	m
+CSTANDARD	Makefile	/^CSTANDARD = -std=c99$/;"	m
 DEBUG	Makefile	/^DEBUG = dwarf-2$/;"	m
 DEBUG_BACKEND	Makefile	/^DEBUG_BACKEND = avarice$/;"	m
 DEBUG_HOST	Makefile	/^DEBUG_HOST = localhost$/;"	m
@@ -136,10 +144,14 @@ SIZE	Makefile	/^SIZE = avr-size$/;"	m
 SRC	Makefile	/^SRC = $(wildcard src\/*.c) $(wildcard src\/*.s)$/;"	m
 TARGET	Makefile	/^TARGET = main$/;"	m
 WINSHELL	Makefile	/^WINSHELL = cmd$/;"	m
+adc_init	src/adc.c	/^void adc_init(uint8_t prescaler) {$/;"	f
+adc_read	src/adc.c	/^int adc_read(uint8_t adcx) {$/;"	f
 birth	src/rules.h	/^	uint16_t birth;$/;"	m	struct:rules_struct
 cell_struct	src/petridish.h	/^struct cell_struct {$/;"	s
 cell_t	src/petridish.h	/^typedef struct cell_struct cell_t;$/;"	t	typeref:struct:cell_struct
 cells	src/petridish.h	/^	cell_t *cells;$/;"	m	struct:petridish_struct
+delay_ms	src/delay.c	/^void delay_ms(uint16_t count) {$/;"	f
+delay_ms_scaled	src/delay.c	/^void delay_ms_scaled(uint16_t min, uint16_t max, uint16_t value) {$/;"	f
 destroy	src/petridish.h	/^	void (*destroy)(petridish_t *petridish);$/;"	m	struct:petridish_struct
 get_state	src/petridish.h	/^	uint32_t (*get_state)(petridish_t *petridish);$/;"	m	struct:petridish_struct
 initial_state_read	src/initial_state.c	/^uint32_t initial_state_read() {$/;"	f

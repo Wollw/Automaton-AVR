@@ -30,6 +30,7 @@
 */
 #include <stdlib.h>
 #include <avr/io.h>
+//#include <avr/interrupt.h>
 #include "config.h"
 #include "serial.h"
 #include "initial_state.h"
@@ -73,20 +74,21 @@ int main(void) {
 	petridish_t *petridish = new_petridish();
 
 	// Test LEDs
-	leds_change_state(0xFFFFFFFF,petridish->size);
+	leds_change_state(0xFFFFFFFF, petridish->size);
 	delay_ms(1000);
 
 	// Start the simulation loop
 	uint32_t state;
 	for (;;) {
+		// Output state to shift registers.
 		state = petridish->get_state(petridish);
-
 		#ifdef CONFIG_USE_SERIAL
 		serial_write_bits_u32(state);
 		#endif
-
 		leds_change_state(state, petridish->size);
 
+
+		// Delay so output shown for a period of time.
 		#ifdef	CONFIG_USE_ADC_FOR_DELAY_TIME
 		#ifdef	CONFIG_DELAY_MIN && CONFIG_DELAY_MAX
 		delay_ms_scaled(
@@ -100,11 +102,12 @@ int main(void) {
 		delay_ms(CONFIG_DELAY_MS);
 		#endif
 
+		// Calculate the next petridish generation.
 		petridish->update(petridish);
 	}
 
 	// Free the memory used by the cells in the automaton.
-	// Program should never actually get here.
+	// The program should never actually get here.
 	petridish->destroy(petridish);
 
 	return 0;
