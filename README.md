@@ -3,13 +3,14 @@ Automaton AVR
 
 About
 -----
-This program simulates a Celullar Automaton with an AVR MCU connected to:
-	(2) 4021 parallel->serial shift registers for reading
-		survival rules from dip switches
-	(2) 4021 parallel->serial shift registers for reading
-		birth rules from dip switches
-	(3) 4021 used to read initial cell state from
-	(3) 74HC595 for controlling 24 different LEDs
+
+This is a cellular automaton simulator based around the Atmel AVR MCU.
+All that is needed to use this simulation is an AVR (ATmega328P and 
+ATtiny85 have been tested) and three 74HC595 shift registers.  Optional 
+parts that can be added are an ADC input for dynamic setting of the delay
+between cell state changes, a serial connection for reading the petridish's
+state, and 4021 parallel to serial shift registers for reading the initial
+state and rules from some external source (such as dip switches).
 
 Configuration
 -------------
@@ -18,6 +19,10 @@ See 'cfg/3x3grid.h' for an example.
 
 Current state of cells is output on each turn on the serial port.  The baud
 rate can be changed in 'serial.h'.
+
+Pins used for the various inputs and outputs can be defined in the header
+file for that purpose (ie: the shift registers used to control the LEDs can
+be configured in leds.h).
 
 Configuration Options
 ---------------------
