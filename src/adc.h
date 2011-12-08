@@ -2,6 +2,7 @@
 	ADC reading and initializing
 */
 #include <avr/io.h>
+#include "config.h"
 
 #define	ADC_PIN			3
 #define ADC_PRESCALE	0b011	// 0b011 is prescale by 8

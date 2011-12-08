@@ -90,6 +90,7 @@ int main(void) {
 
 		// Delay so output shown for a period of time.
 		#ifdef	CONFIG_USE_ADC_FOR_DELAY_TIME
+		serial_write_bits_u32(adc_read(ADC_PIN));
 		#ifdef	CONFIG_DELAY_MIN && CONFIG_DELAY_MAX
 		delay_ms_scaled(
 			CONFIG_DELAY_MIN,
