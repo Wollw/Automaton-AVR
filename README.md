@@ -15,7 +15,7 @@ state and rules from some external source (such as dip switches).
 Configuration
 -------------
 Before compiling there must be a valid 'config.h' file in 'src' directory.
-See 'cfg/3x3grid.h' for an example.
+See 'cfg/example.h' for an example.
 
 Current state of cells is output on each turn on the serial port.  The baud
 rate can be changed in 'serial.h'.

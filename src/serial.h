@@ -1,7 +1,12 @@
 #include <stdlib.h>
 #ifdef CONFIG_USE_SERIAL
 
+#ifdef CONFIG_SERIAL_BAUDRATE
+#define BAUDRATE	CONFIG_SERIAL_BAUDRATE
+#else
 #define BAUDRATE	9600
+#endif
+
 #define MYUBBR		( ( F_CPU / BAUDRATE / 16 ) - 1 )
 
 #define RULES_CP	PD2
