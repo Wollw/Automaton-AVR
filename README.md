@@ -17,9 +17,6 @@ Configuration
 Before compiling there must be a valid 'config.h' file in 'src' directory.
 See 'cfg/example.h' for an example.
 
-Current state of cells is output on each turn on the serial port.  The baud
-rate can be changed in 'serial.h'.
-
 Pins used for the various inputs and outputs can be defined in the header
 file for that purpose (ie: the shift registers used to control the LEDs can
 be configured in leds.h).
