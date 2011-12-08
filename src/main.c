@@ -30,7 +30,6 @@
 */
 #include <stdlib.h>
 #include <avr/io.h>
-//#include <avr/interrupt.h>
 #include "config.h"
 #include "serial.h"
 #include "initial_state.h"
@@ -87,10 +86,8 @@ int main(void) {
 		#endif
 		leds_change_state(state, petridish->size);
 
-
 		// Delay so output shown for a period of time.
 		#ifdef	CONFIG_USE_ADC_FOR_DELAY_TIME
-		serial_write_bits_u32(adc_read(ADC_PIN));
 		#ifdef	CONFIG_DELAY_MIN && CONFIG_DELAY_MAX
 		delay_ms_scaled(
 			CONFIG_DELAY_MIN,
