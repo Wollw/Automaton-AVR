@@ -2,7 +2,7 @@
  *
  *	(c) 2011 - David Ellis Shere
  *
- *	This program simulates a Celullar Automaton with an AVR MCU connected to:
+ *	This program simulates a Cellular Automaton with an AVR MCU connected to:
  *		(2) 4021 parallel->serial shift registers for reading
  *			survival rules from dip switches
  *		(2) 4021 parallel->serial shift registers for reading

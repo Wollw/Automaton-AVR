@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="5.91">
+<eagle version="6.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -14,8 +14,8 @@
 <layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="16" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="14" fill="1" visible="no" active="no"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
@@ -102,46 +102,6 @@
 </layers>
 <schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
 <libraries>
-<library name="MyLib">
-<packages>
-<package name="7.6X7.6MM_LED">
-<pad name="VCC1" x="-2.54" y="2.54" drill="0.8" shape="square"/>
-<pad name="VCC2" x="-2.54" y="-2.54" drill="0.8" shape="square"/>
-<pad name="GND2" x="2.54" y="-2.54" drill="0.8" shape="square"/>
-<pad name="GND1" x="2.54" y="2.54" drill="0.8" shape="square"/>
-<rectangle x1="-2.54" y1="-2.54" x2="2.54" y2="2.54" layer="21"/>
-</package>
-</packages>
-<symbols>
-<symbol name="7.6X7.6MM_LED">
-<rectangle x1="-5.08" y1="-5.08" x2="5.08" y2="5.08" layer="94"/>
-<pin name="VCC1" x="-5.08" y="5.08" length="middle" rot="R180"/>
-<pin name="GND1" x="5.08" y="5.08" length="middle"/>
-<pin name="GND2" x="5.08" y="-5.08" length="middle"/>
-<pin name="VCC2" x="-5.08" y="-5.08" length="middle" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="7.6X7.6_LED">
-<gates>
-<gate name="G$1" symbol="7.6X7.6MM_LED" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="7.6X7.6MM_LED">
-<connects>
-<connect gate="G$1" pin="GND1" pad="GND1"/>
-<connect gate="G$1" pin="GND2" pad="GND2"/>
-<connect gate="G$1" pin="VCC1" pad="VCC1"/>
-<connect gate="G$1" pin="VCC2" pad="VCC2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="resistor">
 <packages>
 <package name="R0402">
@@ -2143,6 +2103,104 @@ type 0309, grid 2.5 mm</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="*Personal Library">
+<packages>
+<package name="7.6X7.6MM-LED">
+<pad name="GREEN" x="-2.54" y="2.54" drill="0.8" shape="square"/>
+<pad name="RED" x="2.54" y="2.54" drill="0.8" shape="square"/>
+<pad name="BLUE" x="2.54" y="-2.54" drill="0.8" shape="square"/>
+<pad name="GND" x="-2.54" y="-2.54" drill="0.8" shape="square"/>
+<polygon width="0.127" layer="21">
+<vertex x="-3.81" y="3.81"/>
+<vertex x="-3.81" y="-3.81"/>
+<vertex x="2.54" y="-3.81"/>
+<vertex x="3.81" y="-2.54"/>
+<vertex x="3.81" y="3.81"/>
+</polygon>
+</package>
+<package name="SOT23-6">
+<wire x1="1.4224" y1="0.8104" x2="1.4224" y2="-0.8104" width="0.2032" layer="21"/>
+<wire x1="-1.4224" y1="-0.8104" x2="-1.4224" y2="0.8104" width="0.2032" layer="21"/>
+<wire x1="-1.3276" y1="-0.8104" x2="-1.4224" y2="-0.8104" width="0.2032" layer="21"/>
+<wire x1="1.4224" y1="-0.8104" x2="1.3276" y2="-0.8104" width="0.2032" layer="21"/>
+<wire x1="1.3276" y1="0.8104" x2="1.4224" y2="0.8104" width="0.2032" layer="21"/>
+<wire x1="-1.4224" y1="0.8104" x2="-1.3276" y2="0.8104" width="0.2032" layer="21"/>
+<circle x="0.9398" y="0.381" radius="0.0359" width="0.3048" layer="21"/>
+<smd name="4" x="-0.95" y="-1.3001" dx="0.55" dy="1.2" layer="1"/>
+<smd name="5" x="0" y="-1.3001" dx="0.55" dy="1.2" layer="1"/>
+<smd name="6" x="0.95" y="-1.3001" dx="0.55" dy="1.2" layer="1"/>
+<smd name="1" x="0.95" y="1.3001" dx="0.55" dy="1.2" layer="1"/>
+<smd name="3" x="-0.95" y="1.3001" dx="0.55" dy="1.2" layer="1"/>
+<smd name="2" x="0" y="1.3001" dx="0.55" dy="1.2" layer="1" rot="R180"/>
+<text x="-0.8255" y="2.159" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-0.9525" y="-0.1905" size="0.4064" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="BIVAR_RGB_LED">
+<wire x1="-10.16" y1="10.16" x2="7.62" y2="10.16" width="0.254" layer="94"/>
+<wire x1="7.62" y1="10.16" x2="7.62" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-10.16" x2="-10.16" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-10.16" x2="-10.16" y2="10.16" width="0.254" layer="94"/>
+<pin name="GND" x="-15.24" y="0" length="middle"/>
+<pin name="RED" x="12.7" y="5.08" length="middle" rot="R180"/>
+<pin name="GREEN" x="12.7" y="0" length="middle" rot="R180"/>
+<pin name="BLUE" x="12.7" y="-5.08" length="middle" rot="R180"/>
+</symbol>
+<symbol name="ATTINY10">
+<wire x1="-10.16" y1="10.16" x2="12.7" y2="10.16" width="0.254" layer="94"/>
+<wire x1="12.7" y1="10.16" x2="12.7" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-10.16" x2="-10.16" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-10.16" x2="-10.16" y2="10.16" width="0.254" layer="94"/>
+<pin name="VCC" x="-15.24" y="5.08" length="middle"/>
+<pin name="GND" x="-15.24" y="-5.08" length="middle"/>
+<pin name="TPIDATA/PB0" x="17.78" y="7.62" length="middle" rot="R180"/>
+<pin name="TPICLK/PB1" x="17.78" y="2.54" length="middle" rot="R180"/>
+<pin name="CLKO/PB2" x="17.78" y="-2.54" length="middle" rot="R180"/>
+<pin name="RESET/PB3" x="17.78" y="-7.62" length="middle" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BIVAR-RGB-LED">
+<gates>
+<gate name="G$1" symbol="BIVAR_RGB_LED" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="7.6X7.6MM-LED">
+<connects>
+<connect gate="G$1" pin="BLUE" pad="BLUE"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="GREEN" pad="GREEN"/>
+<connect gate="G$1" pin="RED" pad="RED"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="ATTINY10">
+<gates>
+<gate name="G$1" symbol="ATTINY10" x="0" y="0"/>
+</gates>
+<devices>
+<device name="SOT" package="SOT23-6">
+<connects>
+<connect gate="G$1" pin="CLKO/PB2" pad="4"/>
+<connect gate="G$1" pin="GND" pad="2"/>
+<connect gate="G$1" pin="RESET/PB3" pad="6"/>
+<connect gate="G$1" pin="TPICLK/PB1" pad="3"/>
+<connect gate="G$1" pin="TPIDATA/PB0" pad="1"/>
+<connect gate="G$1" pin="VCC" pad="5"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2153,50 +2211,119 @@ type 0309, grid 2.5 mm</description>
 </class>
 </classes>
 <parts>
-<part name="U$1" library="MyLib" deviceset="7.6X7.6_LED" device=""/>
 <part name="R1" library="resistor" deviceset="R-US_" device="M1206"/>
 <part name="PAD1" library="wirepad" deviceset="1,6/0,8" device=""/>
 <part name="PAD2" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PAD3" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PAD4" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PAD5" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PAD6" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="R2" library="resistor" deviceset="R-US_" device="M1206"/>
+<part name="R3" library="resistor" deviceset="R-US_" device="M1206"/>
+<part name="U$1" library="*Personal Library" deviceset="BIVAR-RGB-LED" device=""/>
+<part name="U$2" library="*Personal Library" deviceset="ATTINY10" device="SOT"/>
+<part name="R4" library="resistor" deviceset="R-US_" device="M1206"/>
 </parts>
 <sheets>
 <sheet>
 <plain>
+<text x="-33.02" y="-27.94" size="1.778" layer="91">NOTE -- Connect R4 is using no MCU.  Bridge otherwise.</text>
 </plain>
 <instances>
-<instance part="U$1" gate="G$1" x="0" y="0"/>
-<instance part="R1" gate="G$1" x="-33.02" y="0"/>
-<instance part="PAD1" gate="P" x="-48.26" y="0"/>
-<instance part="PAD2" gate="P" x="25.4" y="0" rot="R180"/>
+<instance part="R1" gate="G$1" x="22.86" y="7.62"/>
+<instance part="PAD1" gate="P" x="20.32" y="-7.62" rot="R180"/>
+<instance part="PAD2" gate="P" x="-25.4" y="-12.7" rot="R90"/>
+<instance part="PAD3" gate="P" x="-20.32" y="12.7" rot="R270"/>
+<instance part="PAD4" gate="P" x="-15.24" y="12.7" rot="R270"/>
+<instance part="PAD5" gate="P" x="-15.24" y="-12.7" rot="R90"/>
+<instance part="PAD6" gate="P" x="-20.32" y="-12.7" rot="R90"/>
+<instance part="R2" gate="G$1" x="22.86" y="2.54"/>
+<instance part="R3" gate="G$1" x="22.86" y="-2.54"/>
+<instance part="U$1" gate="G$1" x="40.64" y="2.54" rot="R180"/>
+<instance part="U$2" gate="G$1" x="0" y="0"/>
+<instance part="R4" gate="G$1" x="22.86" y="-22.86"/>
 </instances>
 <busses>
 </busses>
 <nets>
-<net name="N$1" class="0">
-<segment>
-<wire x1="-27.94" y1="0" x2="-15.24" y2="0" width="0.2032" layer="91"/>
-<wire x1="-15.24" y1="0" x2="-5.08" y2="-5.08" width="0.2032" layer="91"/>
-<wire x1="-15.24" y1="0" x2="-5.08" y2="5.08" width="0.2032" layer="91"/>
-<junction x="-15.24" y="0"/>
-<pinref part="U$1" gate="G$1" pin="VCC2"/>
-<pinref part="R1" gate="G$1" pin="2"/>
-<pinref part="U$1" gate="G$1" pin="VCC1"/>
-</segment>
-</net>
-<net name="GND" class="0">
-<segment>
-<wire x1="5.08" y1="5.08" x2="15.24" y2="0" width="0.2032" layer="91"/>
-<wire x1="15.24" y1="0" x2="5.08" y2="-5.08" width="0.2032" layer="91"/>
-<wire x1="15.24" y1="0" x2="22.86" y2="0" width="0.2032" layer="91"/>
-<junction x="15.24" y="0"/>
-<pinref part="U$1" gate="G$1" pin="GND1"/>
-<pinref part="U$1" gate="G$1" pin="GND2"/>
-<pinref part="PAD2" gate="P" pin="P"/>
-</segment>
-</net>
 <net name="VCC" class="0">
 <segment>
-<wire x1="-38.1" y1="0" x2="-45.72" y2="0" width="0.2032" layer="91"/>
+<wire x1="-20.32" y1="10.16" x2="-20.32" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="5.08" x2="-15.24" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="5.08" x2="-15.24" y2="10.16" width="0.1524" layer="91"/>
+<pinref part="PAD3" gate="P" pin="P"/>
+<pinref part="PAD4" gate="P" pin="P"/>
+<pinref part="U$2" gate="G$1" pin="VCC"/>
+<junction x="-15.24" y="5.08"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="PAD5" gate="P" pin="P"/>
+<wire x1="-25.4" y1="-5.08" x2="-20.32" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="PAD6" gate="P" pin="P"/>
+<wire x1="-20.32" y1="-10.16" x2="-20.32" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="-5.08" x2="-15.24" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="-5.08" x2="-15.24" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="PAD2" gate="P" pin="P"/>
+<wire x1="-25.4" y1="-10.16" x2="-25.4" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="-22.86" x2="-33.02" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="-22.86" x2="-33.02" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="-5.08" x2="-25.4" y2="-5.08" width="0.1524" layer="91"/>
+<junction x="-20.32" y="-5.08"/>
+<junction x="-25.4" y="-5.08"/>
+<pinref part="U$2" gate="G$1" pin="GND"/>
+<junction x="-15.24" y="-5.08"/>
+<pinref part="R4" gate="G$1" pin="1"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="R1" gate="G$1" pin="2"/>
+<pinref part="U$1" gate="G$1" pin="BLUE"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="R2" gate="G$1" pin="2"/>
+<pinref part="U$1" gate="G$1" pin="GREEN"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="R3" gate="G$1" pin="2"/>
+<pinref part="U$1" gate="G$1" pin="RED"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
 <pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="U$2" gate="G$1" pin="TPIDATA/PB0"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="U$2" gate="G$1" pin="TPICLK/PB1"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="R3" gate="G$1" pin="1"/>
+<pinref part="U$2" gate="G$1" pin="CLKO/PB2"/>
+</segment>
+</net>
+<net name="N$8" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="GND"/>
+<wire x1="55.88" y1="2.54" x2="55.88" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="-22.86" x2="27.94" y2="-22.86" width="0.1524" layer="91"/>
+<pinref part="R4" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="N$9" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="RESET/PB3"/>
 <pinref part="PAD1" gate="P" pin="P"/>
 </segment>
 </net>
