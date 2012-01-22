@@ -2212,7 +2212,6 @@ type 0309, grid 2.5 mm</description>
 </classes>
 <parts>
 <part name="R1" library="resistor" deviceset="R-US_" device="M1206"/>
-<part name="PAD1" library="wirepad" deviceset="1,6/0,8" device=""/>
 <part name="PAD2" library="wirepad" deviceset="1,6/0,8" device=""/>
 <part name="PAD3" library="wirepad" deviceset="1,6/0,8" device=""/>
 <part name="PAD4" library="wirepad" deviceset="1,6/0,8" device=""/>
@@ -2223,6 +2222,11 @@ type 0309, grid 2.5 mm</description>
 <part name="U$1" library="*Personal Library" deviceset="BIVAR-RGB-LED" device=""/>
 <part name="U$2" library="*Personal Library" deviceset="ATTINY10" device="SOT"/>
 <part name="R4" library="resistor" deviceset="R-US_" device="M1206"/>
+<part name="PB3" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PB2" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PB1" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PB0" library="wirepad" deviceset="1,6/0,8" device=""/>
+<part name="PAD1" library="wirepad" deviceset="1,6/0,8" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2231,7 +2235,6 @@ type 0309, grid 2.5 mm</description>
 </plain>
 <instances>
 <instance part="R1" gate="G$1" x="22.86" y="7.62"/>
-<instance part="PAD1" gate="P" x="20.32" y="-7.62" rot="R180"/>
 <instance part="PAD2" gate="P" x="-25.4" y="-12.7" rot="R90"/>
 <instance part="PAD3" gate="P" x="-20.32" y="12.7" rot="R270"/>
 <instance part="PAD4" gate="P" x="-15.24" y="12.7" rot="R270"/>
@@ -2242,6 +2245,11 @@ type 0309, grid 2.5 mm</description>
 <instance part="U$1" gate="G$1" x="40.64" y="2.54" rot="R180"/>
 <instance part="U$2" gate="G$1" x="0" y="0"/>
 <instance part="R4" gate="G$1" x="22.86" y="-22.86"/>
+<instance part="PB3" gate="P" x="17.78" y="-10.16" rot="R90"/>
+<instance part="PB2" gate="P" x="25.4" y="-7.62" rot="R180"/>
+<instance part="PB1" gate="P" x="17.78" y="5.08" rot="R180"/>
+<instance part="PB0" gate="P" x="17.78" y="17.78" rot="R270"/>
+<instance part="PAD1" gate="P" x="-25.4" y="12.7" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -2255,6 +2263,9 @@ type 0309, grid 2.5 mm</description>
 <pinref part="PAD4" gate="P" pin="P"/>
 <pinref part="U$2" gate="G$1" pin="VCC"/>
 <junction x="-15.24" y="5.08"/>
+<pinref part="PAD1" gate="P" pin="P"/>
+<wire x1="-25.4" y1="10.16" x2="-25.4" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="-25.4" y1="5.08" x2="-20.32" y2="5.08" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -2295,22 +2306,31 @@ type 0309, grid 2.5 mm</description>
 <pinref part="U$1" gate="G$1" pin="RED"/>
 </segment>
 </net>
-<net name="N$1" class="0">
+<net name="PB0" class="0">
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <pinref part="U$2" gate="G$1" pin="TPIDATA/PB0"/>
+<wire x1="17.78" y1="7.62" x2="17.78" y2="15.24" width="0.1524" layer="91"/>
+<pinref part="PB0" gate="P" pin="P"/>
+<junction x="17.78" y="15.24"/>
 </segment>
 </net>
-<net name="N$3" class="0">
+<net name="PB1" class="0">
 <segment>
 <pinref part="R2" gate="G$1" pin="1"/>
 <pinref part="U$2" gate="G$1" pin="TPICLK/PB1"/>
+<pinref part="PB1" gate="P" pin="P"/>
+<wire x1="15.24" y1="5.08" x2="17.78" y2="2.54" width="0.1524" layer="91"/>
+<junction x="17.78" y="2.54"/>
 </segment>
 </net>
-<net name="N$4" class="0">
+<net name="PB2" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
 <pinref part="U$2" gate="G$1" pin="CLKO/PB2"/>
+<wire x1="17.78" y1="-2.54" x2="22.86" y2="-7.62" width="0.1524" layer="91"/>
+<pinref part="PB2" gate="P" pin="P"/>
+<junction x="22.86" y="-7.62"/>
 </segment>
 </net>
 <net name="N$8" class="0">
@@ -2321,10 +2341,11 @@ type 0309, grid 2.5 mm</description>
 <pinref part="R4" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="N$9" class="0">
+<net name="PB3" class="0">
 <segment>
 <pinref part="U$2" gate="G$1" pin="RESET/PB3"/>
-<pinref part="PAD1" gate="P" pin="P"/>
+<pinref part="PB3" gate="P" pin="P"/>
+<junction x="17.78" y="-7.62"/>
 </segment>
 </net>
 </nets>
