@@ -18,4 +18,4 @@
 #endif
 
 void initial_state_shift_init(void);
-uint32_t initial_state_read(void);
+uint64_t initial_state_read(void);

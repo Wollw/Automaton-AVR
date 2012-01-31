@@ -16,4 +16,4 @@
 // Functions for interacting with the output for leds
 // See leds.c for details
 void leds_shift_init(void);
-void leds_change_state(uint32_t new_state, uint8_t pins_to_shift);
+void leds_change_state(uint64_t new_state, uint8_t pins_to_shift);

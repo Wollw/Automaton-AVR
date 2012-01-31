@@ -40,10 +40,10 @@ void serial_write(char c) {
 /*
  *	output bits of a uint32_t
 */
-void serial_write_bits_u32(uint32_t bits) {
-	uint32_t bit_count = 32;
+void serial_write_bits_u64(uint64_t bits) {
+	uint8_t bit_count = sizeof(bits) * 8;
 	for (uint8_t i = 0; i < bit_count; i++) {
-		if (bits & ((uint32_t)1 << i))
+		if (bits & ((uint64_t)1 << i))
 			serial_write('1');
 		else
 			serial_write('0');

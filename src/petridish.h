@@ -11,7 +11,7 @@
 
 // Each instance of a cell holds current state, an id, and the neighbors
 struct cell_struct {
-	uint32_t neighbors; // neighbors bitfield
+	uint64_t neighbors; // neighbors bitfield
 	uint8_t state;
 };
 typedef struct cell_struct cell_t;
@@ -25,11 +25,11 @@ struct petridish_struct {
 	rules_t *rules;
 	void (*update)(petridish_t *petridish);
 	void (*destroy)(petridish_t *petridish);
-	uint32_t (*get_state)(petridish_t *petridish);
+	uint64_t (*get_state)(petridish_t *petridish);
 };
 
 // functions for use with the petridish
 petridish_t* new_petridish(void);
 void petridish_destroy(petridish_t *petridish);
 void petridish_update(petridish_t *petridish);
-uint32_t petridish_get_state(petridish_t *petridish);
+uint64_t petridish_get_state(petridish_t *petridish);

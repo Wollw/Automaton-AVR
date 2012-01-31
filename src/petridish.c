@@ -25,7 +25,7 @@
 #include "initial_state.h"
 #include "config.h"
 
-const uint32_t AUTOMATON_NEIGHBORS[] = CONFIG_NEIGHBORS;
+const uint64_t AUTOMATON_NEIGHBORS[] = CONFIG_NEIGHBORS;
 
 /*
  *	Create and return an petridish.  Sets size, neighbors, rules,
@@ -47,7 +47,7 @@ petridish_t* new_petridish() {
 		return NULL;
 
 	// Set the cells' initial states
-	uint32_t initial_state = initial_state_read();
+	uint64_t initial_state = initial_state_read();
 	for (uint8_t i = 0; i < petridish->size; i++) {
 		petridish->cells[i].state =
 			(initial_state & ((uint32_t)1 << i)) ? ON : OFF ;
@@ -119,14 +119,14 @@ void petridish_update(petridish_t *petridish) {
 /*
 	Converts the cell states from the petridish into individual bits.
 */
-uint32_t petridish_get_state(petridish_t *petridish) {
-	uint32_t state = 0;
+uint64_t petridish_get_state(petridish_t *petridish) {
+	uint64_t state = 0;
 
 	for (uint8_t i = 0; i < petridish->size; i++) {
 		if ( petridish->cells[i].state == ON )
-			state |= (uint32_t)1 << i;
+			state |= (uint64_t)1 << i;
 		else
-			state &= ~((uint32_t)1 << i);
+			state &= ~((uint64_t)1 << i);
 	}
 
 	return state;

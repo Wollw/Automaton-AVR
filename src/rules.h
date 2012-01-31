@@ -30,8 +30,8 @@
 
 // Structure to hold the game rules
 struct rules_struct {
-	uint16_t survival;
-	uint16_t birth;
+	uint32_t survival;
+	uint32_t birth;
 };
 typedef struct rules_struct rules_t;
 
@@ -43,5 +43,5 @@ typedef struct rules_struct rules_t;
 void rules_read(rules_t *rules);
 #ifdef CONFIG_USE_SWITCHES_FOR_SETTINGS
 void rules_shift_init(void);
-uint16_t rules_read_dip(uint8_t rules_type);
+uint32_t rules_read_dip(uint8_t rules_type);
 #endif

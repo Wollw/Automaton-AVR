@@ -66,8 +66,8 @@ void rules_read(rules_t *rules) {
 	bit of which represents a switch state. bit 0 is switch 1.
 */
 #ifdef CONFIG_USE_SWITCHES_FOR_SETTINGS
-uint16_t rules_read_dip(uint8_t rules_type) {
-	uint16_t rules = 0;
+uint32_t rules_read_dip(uint8_t rules_type) {
+	uint32_t rules = 0;
 	uint8_t cp, ps, dout; // Clock, P/S and Data Out pins
 	
 	// Set pin numbers for rule type we want to get

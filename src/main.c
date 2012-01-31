@@ -77,12 +77,12 @@ int main(void) {
 	delay_ms(1000);
 
 	// Start the simulation loop
-	uint32_t state;
+	uint64_t state;
 	for (;;) {
 		// Output state to shift registers.
 		state = petridish->get_state(petridish);
 		#ifdef CONFIG_USE_SERIAL
-		serial_write_bits_u32(state);
+		serial_write_bits_u64(state);
 		#endif
 		leds_change_state(state, petridish->size);
 

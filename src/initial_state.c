@@ -35,11 +35,11 @@ void initial_state_shift_init(void) {
 /*
 	Read the initial state from switches into a uint32_t
 */
-uint32_t initial_state_read() {
+uint64_t initial_state_read() {
 
 	// Use hard coded initial state if no switches are being used
 	#ifdef	CONFIG_USE_SWITCHES_FOR_SETTINGS
-	uint32_t initial_state = 0;
+	uint64_t initial_state = 0;
 	INITIAL_STATE_PORT |= _BV(INITIAL_STATE_PS);
 	_delay_us(20);
 	INITIAL_STATE_PORT &= ~_BV(INITIAL_STATE_PS);
@@ -47,7 +47,7 @@ uint32_t initial_state_read() {
 		_delay_us(2);
 
 		if ( INITIAL_STATE_PINS & _BV(INITIAL_STATE_DO) ) {
-			initial_state |= (uint32_t)1 << i;
+			initial_state |= (uint64_t)1 << i;
 		}
 
 		INITIAL_STATE_PORT &= ~_BV(INITIAL_STATE_CP);
@@ -55,7 +55,7 @@ uint32_t initial_state_read() {
 		INITIAL_STATE_PORT |= _BV(INITIAL_STATE_CP);
 	}
 	#else
-	uint32_t initial_state = CONFIG_INITIAL_STATE;
+	uint64_t initial_state = CONFIG_INITIAL_STATE;
 	#endif
 
 	return initial_state;
