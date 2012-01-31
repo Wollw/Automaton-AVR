@@ -33,9 +33,9 @@ Configuration Options
 	"false" to use predefined values from CONFIG_RULES_SURV,
 	CONFIG_RULES_BITH, and CONFIG_INITIAL_STATE.
 
-	#define	CONFIG_RULES_SURV					<uint16_t>
-	#define	CONFIG_RULES_BIRTH					<uint16_t>
-	uint16_t where each bit represents the rule for a neighbor count.
+	#define	CONFIG_RULES_SURV					<uint32_t>
+	#define	CONFIG_RULES_BIRTH					<uint32_t>
+	uint32_t where each bit represents the rule for a neighbor count.
 	For example, the rules for Conway's Game of Life would be written like
 	this:
 		#define	CONFIG_RULES_SURV	0b1100
@@ -46,8 +46,8 @@ Configuration Options
 	life if it has three living neighbors. This is only used if
 	CONFIG_USE_SWITCHES_FOR_SETTINGS is false.
 
-	#define	CONFIG_INITIAL_STATE				<uint32_t>
-	uint32_t where each bit represents a cell's initial state.
+	#define	CONFIG_INITIAL_STATE				<uint64_t>
+	uint64_t where each bit represents a cell's initial state.
 	if CONFIG_INITIAL_STATE is set to 0b111000 then the cells with the ids
 	of 3, 4, and 5 will be alive at the start of the start of the
 	simulation.  This would result in a blinker with Conway's Game of Life
@@ -71,8 +71,8 @@ Configuration Options
 	Number of milliseconds to delay between update.  This is only used
 	if CONFIG_USE_ADC_FOR_DELAY_TIME is set to false.
 
-	#define CONFIG_NEIGHBORS					<uint32_t[]>
-	An array of uint32_t values that represent the cells considered 
+	#define CONFIG_NEIGHBORS					<uint64_t[]>
+	An array of uint64_t values that represent the cells considered 
 	neighbors to each cell.  Each bit of a neighbor value is represents
 	a cell so that a neighbor value of 0b111 would mean that cells 0, 1, and
 	2 are neighbors to that cell.  If that value is at index 4 then cell 4
@@ -84,7 +84,11 @@ Pick a configuration:
     $ cp cfg/myconfig.h src/config.h
 
 To build:
-    $ make
+	$ make
+	-- or --
+    $ make -f <Makefile>
 
 To upload:
     $ make program
+	-- or --
+	$ make install
