@@ -2231,7 +2231,7 @@ type 0309, grid 2.5 mm</description>
 <sheets>
 <sheet>
 <plain>
-<text x="-33.02" y="-27.94" size="1.778" layer="91">NOTE -- Connect R4 is using no MCU.  Bridge otherwise.</text>
+<text x="-33.02" y="-27.94" size="1.778" layer="91">NOTE -- Connect R4 if using no MCU.  Bridge otherwise.</text>
 </plain>
 <instances>
 <instance part="R1" gate="G$1" x="22.86" y="7.62"/>
