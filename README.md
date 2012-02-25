@@ -83,12 +83,8 @@ Installation
 Pick a configuration:
     $ cp cfg/myconfig.h src/config.h
 
-To build:
-	$ make
-	-- or --
-    $ make -f <Makefile>
+To build for (replace "mymcu" with the mcu you are building for):
+	$ MCU=mymcu make
 
 To upload:
     $ make program
-	-- or --
-	$ make install
