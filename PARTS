@@ -1,10 +1,10 @@
 (1) 8-bit AVR Microcontroller with enough SRAM (an ATMega328P should work)
-(1-8) TPIC6B595 High Power Shift Registers to sink current from LEDs
+(1-8) 74HC595 to signal the LED controllers
 (1-8) 10 pin ribbon cables, one for each shift register
 (1-8) 10POS 2x5 headers for connecting ribbon cables.
 (2-9) 10pf ceramic caps for decoupling ICs
 (1) 100k Ohm resistor for reset pullup on AVR
-(1) LM323T 5V 3A linear voltage regulator (more current needed if using 8 or more shift registers)
+(1) LM323T 5V 3A linear voltage regulator (or greater value if needed)
 (1) heat sink for the voltage regulator
-(1) 1N5401 rectifying diode
+(1) 1N5401 rectifying diode (or similar if different max current needed)
 (1) power jack of some sort to plug a power supply into
