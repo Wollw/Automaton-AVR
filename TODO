@@ -1,2 +1,0 @@
-* Stop using delay and use clock interrupts instead
-* Allow for configuration over serial and saving to eeprom
